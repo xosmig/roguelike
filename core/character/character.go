@@ -14,8 +14,8 @@ type Character struct {
 func New() *Character {
 	return &Character{
 		UnitData: unit.UnitData{
-			MaxHP:    10,
-			CurHP:    10,
+			MaxHP:    3,
+			CurHP:    3,
 			Team:     unit.TeamGood,
 		},
 	}
@@ -34,7 +34,7 @@ func (char *Character) Interact(other objects.GameObject) {
 }
 
 func (char *Character) Response(other objects.GameObject) {
-	char.Interact(other)
+	// empty
 }
 
 func (char *Character) ModelName() string {

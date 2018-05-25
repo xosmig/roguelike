@@ -6,8 +6,7 @@ import (
 )
 
 type Unit interface {
-	objects.GameObject
-	objects.HasPosition
+	objects.MovableObject
 	RecvDamage(dmg int, from Unit)
 	GetTeam() int
 	GetHP() int
@@ -31,7 +30,7 @@ type UnitData struct {
 func RecvDamageDefault(unit Unit, dmg int, from Unit) {
 	newHP := unit.GetHP() - dmg
 	unit.SetHP(newHP)
-	log.Printf("%T damaged by %T, hp=%d\n", unit, from, unit.GetHP())
+	log.Printf("Debug: %T damaged by %T, hp=%d\n", unit, from, unit.GetHP())
 }
 
 func InteractDefault(unit Unit, other objects.GameObject) {
@@ -87,6 +86,6 @@ func (unit *UnitData) SetHPNorm(hpNorm float32) {
 	unit.SetHP(int(float32(unit.GetMaxHP())*hpNorm + 0.5))
 }
 
-func (unit *UnitData) IsAlive() bool {
+func IsAlive(unit Unit) bool {
 	return unit.GetHP() > 0
 }

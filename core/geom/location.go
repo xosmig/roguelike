@@ -38,7 +38,7 @@ func (loc Location) Neighbour(other Location) bool {
 }
 
 func (loc Location) StepTo(other Location) (Direction, bool) {
-	switch loc.Row - other.Row {
+	switch other.Row - loc.Row {
 	case 0:
 	case -1:
 		return Up, true
@@ -48,7 +48,7 @@ func (loc Location) StepTo(other Location) (Direction, bool) {
 		return Nowhere, false
 	}
 
-	switch loc.Col - other.Col {
+	switch other.Col - loc.Col {
 	case 0:
 	case -1:
 		return Left, true

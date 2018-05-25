@@ -1,16 +1,23 @@
 package geom
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Direction int
 
 const (
-	Nowhere = iota
+	Nowhere Direction = iota
 	Up
 	Down
 	Left
 	Right
 )
+
+func RandomDirection() Direction {
+	return Direction(rand.Intn(4) + int(Nowhere) + 1)
+}
 
 func (d Direction) String() string {
 	switch d {

@@ -25,14 +25,10 @@ func (f repeatedObjectFactory) Create(pos geom.Location) (objects.GameObject, er
 
 type singletonObjectFactory struct {
 	obj objects.GameObject
-	pos objects.HasPosition
 }
 
 func Singleton(obj objects.GameObject) ObjectFactory {
-	f := singletonObjectFactory{obj: obj, pos: nil}
-	if pos, ok := obj.(objects.HasPosition); ok {
-		f.pos = pos
-	}
+	f := singletonObjectFactory{obj: obj}
 	return f
 }
 
@@ -40,11 +36,12 @@ func (f singletonObjectFactory) Create(pos geom.Location) (objects.GameObject, e
 	if f.obj == nil {
 		return nil, fmt.Errorf("double access to singleton object factory")
 	}
-	if f.pos != nil {
-		f.pos.SetPosition(pos)
-	}
+
 	res := f.obj
 	f.obj = nil
-	f.pos = nil
+
+	if obj, ok := res.(objects.HasPosition); ok {
+		obj.SetPosition(pos)
+	}
 	return res, nil
 }

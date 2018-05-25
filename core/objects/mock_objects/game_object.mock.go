@@ -34,16 +34,6 @@ func (m *MockGameObject) EXPECT() *MockGameObjectMockRecorder {
 	return m.recorder
 }
 
-// Interact mocks base method
-func (m *MockGameObject) Interact(other objects.GameObject) {
-	m.ctrl.Call(m, "Interact", other)
-}
-
-// Interact indicates an expected call of Interact
-func (mr *MockGameObjectMockRecorder) Interact(other interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Interact", reflect.TypeOf((*MockGameObject)(nil).Interact), other)
-}
-
 // Response mocks base method
 func (m *MockGameObject) Response(other objects.GameObject) {
 	m.ctrl.Call(m, "Response", other)
@@ -109,4 +99,81 @@ func (m *MockHasPosition) GetPosition() geom.Location {
 // GetPosition indicates an expected call of GetPosition
 func (mr *MockHasPositionMockRecorder) GetPosition() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosition", reflect.TypeOf((*MockHasPosition)(nil).GetPosition))
+}
+
+// MockMovableObject is a mock of MovableObject interface
+type MockMovableObject struct {
+	ctrl     *gomock.Controller
+	recorder *MockMovableObjectMockRecorder
+}
+
+// MockMovableObjectMockRecorder is the mock recorder for MockMovableObject
+type MockMovableObjectMockRecorder struct {
+	mock *MockMovableObject
+}
+
+// NewMockMovableObject creates a new mock instance
+func NewMockMovableObject(ctrl *gomock.Controller) *MockMovableObject {
+	mock := &MockMovableObject{ctrl: ctrl}
+	mock.recorder = &MockMovableObjectMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockMovableObject) EXPECT() *MockMovableObjectMockRecorder {
+	return m.recorder
+}
+
+// Response mocks base method
+func (m *MockMovableObject) Response(other objects.GameObject) {
+	m.ctrl.Call(m, "Response", other)
+}
+
+// Response indicates an expected call of Response
+func (mr *MockMovableObjectMockRecorder) Response(other interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Response", reflect.TypeOf((*MockMovableObject)(nil).Response), other)
+}
+
+// ModelName mocks base method
+func (m *MockMovableObject) ModelName() string {
+	ret := m.ctrl.Call(m, "ModelName")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// ModelName indicates an expected call of ModelName
+func (mr *MockMovableObjectMockRecorder) ModelName() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ModelName", reflect.TypeOf((*MockMovableObject)(nil).ModelName))
+}
+
+// SetPosition mocks base method
+func (m *MockMovableObject) SetPosition(pos geom.Location) {
+	m.ctrl.Call(m, "SetPosition", pos)
+}
+
+// SetPosition indicates an expected call of SetPosition
+func (mr *MockMovableObjectMockRecorder) SetPosition(pos interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetPosition", reflect.TypeOf((*MockMovableObject)(nil).SetPosition), pos)
+}
+
+// GetPosition mocks base method
+func (m *MockMovableObject) GetPosition() geom.Location {
+	ret := m.ctrl.Call(m, "GetPosition")
+	ret0, _ := ret[0].(geom.Location)
+	return ret0
+}
+
+// GetPosition indicates an expected call of GetPosition
+func (mr *MockMovableObjectMockRecorder) GetPosition() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosition", reflect.TypeOf((*MockMovableObject)(nil).GetPosition))
+}
+
+// Interact mocks base method
+func (m *MockMovableObject) Interact(other objects.GameObject) {
+	m.ctrl.Call(m, "Interact", other)
+}
+
+// Interact indicates an expected call of Interact
+func (mr *MockMovableObjectMockRecorder) Interact(other interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Interact", reflect.TypeOf((*MockMovableObject)(nil).Interact), other)
 }

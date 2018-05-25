@@ -19,6 +19,24 @@ type GameMap interface {
 	Get(geom.Location) *Cell
 }
 
+func AllObjects(gameMap GameMap) []objects.GameObject {
+	res := make([]objects.GameObject, 0, gameMap.GetHeight()*gameMap.GetWidth())
+	for row := 0; row < gameMap.GetHeight(); row++ {
+		for col := 0; col < gameMap.GetWidth(); col++ {
+			res = append(res, gameMap.Get(geom.Loc(row, col)).Object)
+		}
+	}
+	return res
+}
+
+func IsFree(gameMap GameMap, pos geom.Location) bool {
+	return gameMap.Get(pos).Object == objects.Empty
+}
+
+func Remove(gameMap GameMap, pos geom.Location) {
+	gameMap.Get(pos).Object = objects.Empty
+}
+
 type StaticMap struct {
 	cells [][]Cell
 }

@@ -3,7 +3,6 @@ package objects
 import "github.com/xosmig/roguelike/core/geom"
 
 type GameObject interface {
-	Interact(other GameObject)
 	Response(other GameObject)
 	ModelName() string
 }
@@ -11,6 +10,12 @@ type GameObject interface {
 type HasPosition interface {
 	SetPosition(pos geom.Location)
 	GetPosition() geom.Location
+}
+
+type MovableObject interface {
+	GameObject
+	HasPosition
+	Interact(other GameObject)
 }
 
 type PositionData struct {
@@ -28,7 +33,6 @@ func (p *PositionData) GetPosition() geom.Location {
 
 type wallObject struct{}
 
-func (w wallObject) Interact(other GameObject) {}
 func (w wallObject) Response(other GameObject) {}
 func (w wallObject) ModelName() string {
 	return "wall"
@@ -38,7 +42,6 @@ var Wall GameObject = wallObject{}
 
 type emptyObject struct{}
 
-func (e emptyObject) Interact(other GameObject) {}
 func (e emptyObject) Response(other GameObject) {}
 func (e emptyObject) ModelName() string {
 	return "empty"

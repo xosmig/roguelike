@@ -2,8 +2,9 @@ package zombie
 
 import (
 	"github.com/xosmig/roguelike/core/objects"
-	"github.com/xosmig/roguelike/core/state"
 	"github.com/xosmig/roguelike/core/unit"
+	"github.com/xosmig/roguelike/core/state"
+	"github.com/xosmig/roguelike/core/geom"
 )
 
 type Zombie struct {
@@ -29,7 +30,7 @@ func (zombie *Zombie) Interact(other objects.GameObject) {
 }
 
 func (zombie *Zombie) Response(other objects.GameObject) {
-	zombie.Interact(other)
+	// empty
 }
 
 func (zombie *Zombie) ModelName() string {
@@ -40,5 +41,7 @@ func (zombie *Zombie) DoAction(st state.GameState) {
 	char := st.GetCharacter()
 	if dir, ok := zombie.GetPosition().StepTo(char.GetPosition()); ok {
 		st.TryMove(zombie, dir)
+	} else {
+		st.TryMove(zombie, geom.RandomDirection())
 	}
 }
