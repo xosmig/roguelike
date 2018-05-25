@@ -2,24 +2,35 @@ package character
 
 import (
 	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/unit"
 )
 
 type Character struct {
-	objects.UnitData
+	unit.UnitData
 	Wearing   Item
 	Inventory []Item
 }
 
-func (char *Character) RecvDamage(dmg int, from objects.Unit) {
-	objects.RecvDamageDefault(char, dmg, from)
+func New() *Character {
+	return &Character{
+		UnitData: unit.UnitData{
+			MaxHP:    10,
+			CurHP:    10,
+			Team:     unit.TeamGood,
+		},
+	}
 }
 
-func (char *Character) Die(from objects.Unit) {
+func (char *Character) RecvDamage(dmg int, from unit.Unit) {
+	unit.RecvDamageDefault(char, dmg, from)
+}
+
+func (char *Character) Die(from unit.Unit) {
 	// TODO
 }
 
 func (char *Character) Interact(other objects.GameObject) {
-	objects.UnitInteractDefault(char, other)
+	unit.InteractDefault(char, other)
 }
 
 func (char *Character) Response(other objects.GameObject) {

@@ -6,6 +6,7 @@ package mock_objects
 
 import (
 	gomock "github.com/golang/mock/gomock"
+	geom "github.com/xosmig/roguelike/core/geom"
 	objects "github.com/xosmig/roguelike/core/objects"
 	reflect "reflect"
 )
@@ -89,7 +90,7 @@ func (m *MockHasPosition) EXPECT() *MockHasPositionMockRecorder {
 }
 
 // SetPosition mocks base method
-func (m *MockHasPosition) SetPosition(pos objects.Location) {
+func (m *MockHasPosition) SetPosition(pos geom.Location) {
 	m.ctrl.Call(m, "SetPosition", pos)
 }
 
@@ -99,9 +100,9 @@ func (mr *MockHasPositionMockRecorder) SetPosition(pos interface{}) *gomock.Call
 }
 
 // GetPosition mocks base method
-func (m *MockHasPosition) GetPosition() objects.Location {
+func (m *MockHasPosition) GetPosition() geom.Location {
 	ret := m.ctrl.Call(m, "GetPosition")
-	ret0, _ := ret[0].(objects.Location)
+	ret0, _ := ret[0].(geom.Location)
 	return ret0
 }
 

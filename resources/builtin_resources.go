@@ -4,10 +4,10 @@ var BuiltinLoader Loader = NewInMemoryLoader()
 
 var exampleMap = "6 11\n" +
 	"###########\n" +
-	"#@.#*.##.O#\n" +
+	"#@.#.$##.O#\n" +
 	"#.#..###.##\n" +
 	"#..#..##..#\n" +
-	"#.........#\n" +
+	"#.....z...#\n" +
 	"###########\n" +
 	""
 

@@ -1,33 +1,40 @@
-package objects
+package unit
+
+import (
+	"github.com/xosmig/roguelike/core/objects"
+	"log"
+)
 
 type Unit interface {
-	GameObject
-	HasPosition
+	objects.GameObject
+	objects.HasPosition
 	RecvDamage(dmg int, from Unit)
 	GetTeam() int
 	GetHP() int
 	SetHP(hp int)
 	GetMaxHP() int
 	SetMaxHP(hp int)
-	Die(from Unit)
 }
 
+const (
+	TeamGood = 1
+	TeamEvil = 2
+)
+
 type UnitData struct {
-	PositionData
-	MaxHP    int
-	CurHP    int
-	Team     int
+	objects.PositionData
+	MaxHP int
+	CurHP int
+	Team  int
 }
 
 func RecvDamageDefault(unit Unit, dmg int, from Unit) {
 	newHP := unit.GetHP() - dmg
 	unit.SetHP(newHP)
-	if unit.GetHP() == 0 {
-		unit.Die(from)
-	}
+	log.Printf("%T damaged by %T, hp=%d\n", unit, from, unit.GetHP())
 }
 
-func UnitInteractDefault(unit Unit, other GameObject) {
+func InteractDefault(unit Unit, other objects.GameObject) {
 	if otherUnit, ok := other.(Unit); ok {
 		if otherUnit.GetTeam() != unit.GetTeam() {
 			otherUnit.RecvDamage(1, unit)
@@ -78,13 +85,6 @@ func (unit *UnitData) GetHPNorm() float32 {
 
 func (unit *UnitData) SetHPNorm(hpNorm float32) {
 	unit.SetHP(int(float32(unit.GetMaxHP())*hpNorm + 0.5))
-}
-
-func (unit *UnitData) Blocks(other GameObject) bool {
-	if otherUnit, ok := other.(Unit); ok {
-		return unit.GetTeam() != otherUnit.GetTeam()
-	}
-	return false
 }
 
 func (unit *UnitData) IsAlive() bool {

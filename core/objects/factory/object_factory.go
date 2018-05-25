@@ -3,10 +3,11 @@ package factory
 import (
 	"fmt"
 	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/geom"
 )
 
 type ObjectFactory interface {
-	Create(objects.Location) (objects.GameObject, error)
+	Create(geom.Location) (objects.GameObject, error)
 }
 
 type repeatedObjectFactory struct {
@@ -17,7 +18,7 @@ func Repeated(obj objects.GameObject) ObjectFactory {
 	return repeatedObjectFactory{obj}
 }
 
-func (f repeatedObjectFactory) Create(pos objects.Location) (objects.GameObject, error) {
+func (f repeatedObjectFactory) Create(pos geom.Location) (objects.GameObject, error) {
 	// since it repeats the same objects in many places, it doesn't make sense to call SetPosition
 	return f.obj, nil
 }
@@ -35,7 +36,7 @@ func Singleton(obj objects.GameObject) ObjectFactory {
 	return f
 }
 
-func (f singletonObjectFactory) Create(pos objects.Location) (objects.GameObject, error) {
+func (f singletonObjectFactory) Create(pos geom.Location) (objects.GameObject, error) {
 	if f.obj == nil {
 		return nil, fmt.Errorf("double access to singleton object factory")
 	}

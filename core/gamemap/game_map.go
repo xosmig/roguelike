@@ -6,6 +6,7 @@ import (
 	"github.com/xosmig/roguelike/core/objects"
 	"unicode"
 	"github.com/xosmig/roguelike/core/objects/factory"
+	"github.com/xosmig/roguelike/core/geom"
 )
 
 type Cell struct {
@@ -15,14 +16,14 @@ type Cell struct {
 type GameMap interface {
 	GetHeight() int
 	GetWidth() int
-	Get(objects.Location) *Cell
+	Get(geom.Location) *Cell
 }
 
 type StaticMap struct {
 	cells [][]Cell
 }
 
-func (m *StaticMap) Get(loc objects.Location) *Cell {
+func (m *StaticMap) Get(loc geom.Location) *Cell {
 	return &m.cells[loc.Row][loc.Col]
 }
 
@@ -63,7 +64,7 @@ func Load(loader resources.Loader, name string, mapping map[byte]factory.ObjectF
 			if !present {
 				return nil, fmt.Errorf("no mapping for '%c'", value)
 			}
-			obj, err := f.Create(objects.Loc(row, col))
+			obj, err := f.Create(geom.Loc(row, col))
 			if err != nil {
 				return nil, fmt.Errorf("while create game object: %v", err)
 			}

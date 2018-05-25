@@ -1,5 +1,7 @@
 package objects
 
+import "github.com/xosmig/roguelike/core/geom"
+
 type GameObject interface {
 	Interact(other GameObject)
 	Response(other GameObject)
@@ -7,20 +9,20 @@ type GameObject interface {
 }
 
 type HasPosition interface {
-	SetPosition(pos Location)
-	GetPosition() Location
+	SetPosition(pos geom.Location)
+	GetPosition() geom.Location
 }
 
 type PositionData struct {
-	Position Location
+	pos geom.Location
 }
 
-func (p *PositionData) SetPosition(pos Location) {
-	p.Position = pos
+func (p *PositionData) SetPosition(pos geom.Location) {
+	p.pos = pos
 }
 
-func (p *PositionData) GetPosition() Location {
-	return p.Position
+func (p *PositionData) GetPosition() geom.Location {
+	return p.pos
 }
 
 

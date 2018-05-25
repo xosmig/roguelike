@@ -6,23 +6,23 @@ import (
 	"github.com/xosmig/roguelike/core/character"
 	"github.com/xosmig/roguelike/resources"
 	"log"
-	"os"
 	"github.com/xosmig/roguelike/core/objects/factory"
+	"github.com/xosmig/roguelike/core/state"
+	"github.com/xosmig/roguelike/core/unit"
+	"github.com/xosmig/roguelike/core/geom"
+	"github.com/xosmig/roguelike/core/enemies/zombie"
 )
 
 type GameModel interface {
-	GetMap() gamemap.GameMap
-	GetCharacter() *character.Character
-	DoMove(objects.Direction)
-	SetLogger(*log.Logger)
+	state.GameState
+	DoMove(geom.Direction)
 }
 
 type gameModel struct {
 	levelMap     gamemap.GameMap
 	char         *character.Character
-	units        []objects.Unit
+	units        []unit.Unit
 	eventHandler EventHandler
-	logger       *log.Logger
 }
 
 type ExitHandler interface {
@@ -49,18 +49,13 @@ func New(loader resources.Loader, mapName string, eventHandler EventHandler) (Ga
 	model := new(gameModel)
 
 	exitObj := &exit{model: model}
-	char := &character.Character{
-		UnitData: objects.UnitData{
-			MaxHP:    100,
-			CurHP:    100,
-			Team:     0,
-		},
-	}
+	char := character.New()
 	levelMap, err := gamemap.Load(loader, mapName, map[byte]factory.ObjectFactory{
 		'#': factory.Repeated(objects.Wall),
 		'O': factory.Singleton(exitObj),
 		'@': factory.Singleton(char),
-		'*': factory.Repeated(objects.Wall), // TODO
+		'z': factory.Singleton(zombie.New()),
+		'$': factory.Singleton(objects.Wall), // TODO
 	})
 
 	if err != nil {
@@ -69,22 +64,17 @@ func New(loader resources.Loader, mapName string, eventHandler EventHandler) (Ga
 
 	model.levelMap = levelMap
 	model.char = char
-	model.units = nil  // TODO
+	model.units = nil // TODO
 	model.eventHandler = eventHandler
-	model.logger = log.New(os.Stderr, "", 0)
 
 	return model, nil
 }
 
-func (m *gameModel) SetLogger(logger *log.Logger) {
-	m.logger = logger
-}
-
-func (m *gameModel) tryMove(unit objects.Unit, direction objects.Direction) {
+func (m *gameModel) TryMove(unit unit.Unit, direction geom.Direction) {
 	pos := unit.GetPosition()
 	newPos := pos.Next(direction)
 
-	m.logger.Printf("Debug: move %T %v from %v to %v\n", unit, direction, pos, newPos)
+	log.Printf("Debug: move %T %v from %v to %v\n", unit, direction, pos, newPos)
 
 	oldCell := m.levelMap.Get(pos)
 	newCell := m.levelMap.Get(newPos)
@@ -93,7 +83,7 @@ func (m *gameModel) tryMove(unit objects.Unit, direction objects.Direction) {
 	newCell.Object.Response(unit)
 
 	if newCell.Object != objects.Empty {
-		m.logger.Printf("Debug: can't go because of %T\n", newCell.Object)
+		log.Printf("Debug: %T can't go because of %T\n", unit, newCell.Object)
 		return
 	}
 
@@ -102,8 +92,8 @@ func (m *gameModel) tryMove(unit objects.Unit, direction objects.Direction) {
 	newCell.Object = unit
 }
 
-func (m *gameModel) DoMove(direction objects.Direction) {
-	m.tryMove(m.GetCharacter(), direction)
+func (m *gameModel) DoMove(direction geom.Direction) {
+	m.TryMove(m.GetCharacter(), direction)
 }
 
 func (m *gameModel) GetMap() gamemap.GameMap {

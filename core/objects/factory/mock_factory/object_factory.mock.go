@@ -6,6 +6,7 @@ package mock_factory
 
 import (
 	gomock "github.com/golang/mock/gomock"
+	geom "github.com/xosmig/roguelike/core/geom"
 	objects "github.com/xosmig/roguelike/core/objects"
 	reflect "reflect"
 )
@@ -34,7 +35,7 @@ func (m *MockObjectFactory) EXPECT() *MockObjectFactoryMockRecorder {
 }
 
 // Create mocks base method
-func (m *MockObjectFactory) Create(arg0 objects.Location) (objects.GameObject, error) {
+func (m *MockObjectFactory) Create(arg0 geom.Location) (objects.GameObject, error) {
 	ret := m.ctrl.Call(m, "Create", arg0)
 	ret0, _ := ret[0].(objects.GameObject)
 	ret1, _ := ret[1].(error)

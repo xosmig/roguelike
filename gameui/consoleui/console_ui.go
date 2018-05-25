@@ -6,8 +6,8 @@ import (
 	"github.com/nsf/termbox-go"
 	"github.com/xosmig/roguelike/gameui"
 	"github.com/xosmig/roguelike/resources"
-	"github.com/xosmig/roguelike/core/objects"
 	"log"
+	"github.com/xosmig/roguelike/core/geom"
 )
 
 type consoleUi struct {
@@ -34,8 +34,8 @@ func (ui *consoleUi) render() error {
 
 	for row := 0; row < gameMap.GetHeight(); row++ {
 		for col := 0; col < gameMap.GetWidth(); col++ {
-			var ch byte
-			switch gameMap.Get(objects.Location{row, col}).Object.ModelName() {
+			var ch rune
+			switch gameMap.Get(geom.Location{row, col}).Object.ModelName() {
 			case "exit":
 				ch = 'O'
 			case "character":
@@ -44,6 +44,8 @@ func (ui *consoleUi) render() error {
 				ch = '#'
 			case "empty":
 				ch = ' '
+			case "zombie":
+				ch = '💀'
 			default:
 				return fmt.Errorf("invalid model name")
 			}
@@ -79,13 +81,13 @@ loop:
 
 		switch ev.Key {
 		case termbox.KeyArrowUp:
-			ui.model.DoMove(objects.Up)
+			ui.model.DoMove(geom.Up)
 		case termbox.KeyArrowDown:
-			ui.model.DoMove(objects.Down)
+			ui.model.DoMove(geom.Down)
 		case termbox.KeyArrowLeft:
-			ui.model.DoMove(objects.Left)
+			ui.model.DoMove(geom.Left)
 		case termbox.KeyArrowRight:
-			ui.model.DoMove(objects.Right)
+			ui.model.DoMove(geom.Right)
 		case termbox.KeyCtrlC:
 			break loop
 		default:
