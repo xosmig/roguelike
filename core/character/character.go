@@ -7,8 +7,8 @@ import (
 
 type Character struct {
 	unit.UnitData
-	Wearing   Item
-	Inventory []Item
+	wearing   Item
+	inventory []Item
 }
 
 func New() *Character {
@@ -29,8 +29,16 @@ func (char *Character) Die(from unit.Unit) {
 	// TODO
 }
 
+func (char *Character) Wearing() Item {
+	return char.wearing
+}
+
+func (char *Character) Inventory() []Item {
+	return char.inventory
+}
+
 func (char *Character) AddItem(item Item) {
-	char.Inventory = append(char.Inventory, item)
+	char.inventory = append(char.inventory, item)
 }
 
 func (char *Character) Interact(other objects.GameObject) {

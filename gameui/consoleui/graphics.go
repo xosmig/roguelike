@@ -3,10 +3,9 @@ package consoleui
 import (
 	"github.com/nsf/termbox-go"
 	"github.com/xosmig/roguelike/core/geom"
-	"fmt"
 )
 
-func (ui *consoleUi) drawMap() error {
+func (ui *consoleUi) drawMap() {
 	gameMap := ui.model.GetMap()
 
 	for row := 0; row < gameMap.GetHeight(); row++ {
@@ -26,41 +25,84 @@ func (ui *consoleUi) drawMap() error {
 			case "item":
 				ch = '$'
 			default:
-				return fmt.Errorf("invalid model name")
+				ch = '?'
 			}
-			termbox.SetCell(col, row, rune(ch), 0, 0)
+			ui.draw(rune(ch), 0, 0)
 		}
+		ui.nextLine()
 	}
-	return nil
 }
 
-func (ui *consoleUi) drawHealthBar() error {
-	row := ui.mapBottom() + 1
+func (ui *consoleUi) drawRules() {
+	ui.println("Use arrows to move, Ctrl+C to exit")
+}
+
+func (ui *consoleUi) drawHealthBar() {
 	char := ui.model.GetCharacter()
+
 	for i := 0; i < char.GetHP(); i++ {
-		termbox.SetCell(i, row, '@', termbox.ColorRed|termbox.AttrBold, 0)
+		ui.draw('@', termbox.ColorRed|termbox.AttrBold, 0)
 	}
 	for i := char.GetHP(); i < char.GetMaxHP(); i++ {
-		termbox.SetCell(i, row, '@', termbox.ColorCyan, 0)
+		ui.draw('@', termbox.ColorCyan, 0)
 	}
 
-	return nil
+	ui.nextLine()
+}
+
+func (ui *consoleUi) drawInventory() {
+	char := ui.model.GetCharacter()
+
+	if len(char.Inventory()) == 0 {
+		ui.emptyLine()
+		ui.emptyLine()
+		ui.emptyLine()
+		return
+	}
+
+	ui.println("Use Ctrl + A/S/D to wear or take off items")
+	for i := range char.Inventory() {
+		ui.draw('A'+rune(i), 0, 0)
+	}
+	ui.nextLine()
+
+	for _, item := range char.Inventory() {
+		var ch rune
+		switch item.IconName() {
+		case "health_amulet":
+			ch = 'H'
+		default:
+			ch = '?'
+		}
+
+		var attr = termbox.ColorCyan
+		if char.Wearing() == item {
+			attr = termbox.ColorRed | termbox.AttrBold
+		}
+
+		ui.draw(ch, attr, 0)
+	}
+	ui.nextLine()
 }
 
 func (ui *consoleUi) clear() {
 	termbox.Clear(0, 0)
-	ui.messagesLine = ui.mapBottom() + 5
+	ui.curLine = 0
 }
 
 func (ui *consoleUi) render() error {
 	ui.clear()
 
-	if err := ui.drawMap(); err != nil {
-		return err
-	}
-	if err := ui.drawHealthBar(); err != nil {
-		return err
-	}
+	ui.drawMap()
+	ui.emptyLine()
+	ui.drawRules()
+	ui.drawHealthBar()
+	ui.emptyLine()
+	ui.drawInventory()
+
+	ui.emptyLine()
+	ui.emptyLine()
+	// messages will be displayed bellow
 
 	return termbox.Flush()
 }

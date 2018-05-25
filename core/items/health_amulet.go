@@ -25,3 +25,7 @@ func (amulet HealthAmulet) TakeOff(character *character.Character) error {
 	character.SetMaxHPPreserveNorm(character.GetMaxHP() - maxHPBonus)
 	return nil
 }
+
+func (amulet HealthAmulet) IconName() string {
+	return "health_amulet"
+}

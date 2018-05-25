@@ -9,9 +9,28 @@ import (
 )
 
 type consoleUi struct {
-	mapName      string
-	model        gamemodel.GameModel
-	messagesLine int
+	mapName string
+	model   gamemodel.GameModel
+
+	curLine int
+	linePos int
+}
+
+func (ui *consoleUi) draw(ch rune, fg, bg termbox.Attribute) {
+	termbox.SetCell(ui.linePos, ui.curLine, ch, fg, bg)
+	ui.linePos++
+}
+
+func (ui *consoleUi) nextLine() {
+	ui.curLine++
+	ui.linePos = 0
+}
+
+func (ui *consoleUi) emptyLine() {
+	if ui.linePos != 0 {
+		panic("Invalid use of consoleUi.emptyLine()")
+	}
+	ui.nextLine()
 }
 
 func New(mapName string) (gameui.Ui, error) {
@@ -39,8 +58,4 @@ func (ui *consoleUi) reloadGameModel() error {
 func (ui *consoleUi) Close() error {
 	termbox.Close()
 	return nil
-}
-
-func (ui *consoleUi) mapBottom() int {
-	return ui.model.GetMap().GetHeight()
 }
