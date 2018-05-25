@@ -4,10 +4,12 @@ import (
 	"testing"
 	"bytes"
 	"github.com/xosmig/roguelike/core/objects"
-	"github.com/xosmig/roguelike/core/objects/mock_objects"
 	"github.com/golang/mock/gomock"
 	"strings"
 	"github.com/xosmig/roguelike/resources/mock_resources"
+	"github.com/xosmig/roguelike/core/objects/factory"
+	"github.com/xosmig/roguelike/core/objects/factory/mock_factory"
+	"github.com/xosmig/roguelike/core/character"
 )
 
 func TestLoad(t *testing.T) {
@@ -15,8 +17,8 @@ func TestLoad(t *testing.T) {
 
 	data := "6 11\n" +
 		"###########\n" +
-		"#@.#*.##.O#\n" +
-		"#.#..###.##\n" +
+		"#..#..##..#\n" +
+		"#@#..###.##\n" +
 		"#..#..##..#\n" +
 		"#.........#\n" +
 		"###########\n" +
@@ -27,11 +29,16 @@ func TestLoad(t *testing.T) {
 	loader := mock_resources.NewMockLoader(ctrl)
 	loader.EXPECT().Load("maps/example").Times(1).Return(bytes.NewBufferString(data), nil)
 
-	mapping := map[byte]objects.GameObject{
-		'#': objects.Wall,
-		'@': mock_objects.NewMockGameObject(ctrl),
-		'*': mock_objects.NewMockGameObject(ctrl),
-		'O': mock_objects.NewMockGameObject(ctrl),
+	wallFactory := mock_factory.NewMockObjectFactory(ctrl)
+	wallFactory.EXPECT().Create(gomock.Any()).Times(42).Return(objects.Wall, nil)
+
+	char := &character.Character{}
+	charFactory := mock_factory.NewMockObjectFactory(ctrl)
+	charFactory.EXPECT().Create(objects.Loc(2, 1)).Times(1).Return(char, nil)
+
+	mapping := map[byte]factory.ObjectFactory{
+		'#': wallFactory,
+		'@': charFactory,
 	}
 
 	gameMap, err := Load(loader, "maps/example", mapping)
@@ -39,12 +46,20 @@ func TestLoad(t *testing.T) {
 		t.Fatalf("Error loading example map: %v", err)
 	}
 
+	objMapping := map[byte]objects.GameObject{
+		'#': objects.Wall,
+		'@': char,
+		'.': objects.Empty,
+	}
+
 	lines := strings.Split(data, "\n")[1:]
 	for row := 0; row < height; row++ {
 		for col := 0; col < width; col++ {
-			if mapping[lines[row][col]] != gameMap.Get(objects.Location{row, col}) {
-				t.Errorf("Invalid object at position (%d, %d)", row, col)
+			loc := objects.Loc(row, col)
+			if objMapping[lines[row][col]] != gameMap.Get(loc).Object {
+				t.Errorf("Wrong object at %v", loc)
 			}
 		}
 	}
+
 }

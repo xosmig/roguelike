@@ -7,6 +7,7 @@ import (
 	"github.com/xosmig/roguelike/resources"
 	"log"
 	"os"
+	"github.com/xosmig/roguelike/core/objects/factory"
 )
 
 type GameModel interface {
@@ -24,43 +25,55 @@ type gameModel struct {
 	logger       *log.Logger
 }
 
+type ExitHandler interface {
+	OnExit()
+}
+
+type exit struct {
+	objects.PositionData
+	model *gameModel
+}
+
+func (e *exit) Interact(other objects.GameObject) {}
+func (e *exit) Response(other objects.GameObject) {
+	e.model.eventHandler.OnExit()
+	// self-remove
+	e.model.GetMap().Get(e.GetPosition()).Object = objects.Empty
+}
+
+func (e *exit) ModelName() string {
+	return "exit"
+}
+
 func New(loader resources.Loader, mapName string, eventHandler EventHandler) (GameModel, error) {
-	exitObj := objects.NewExit(eventHandler)
+	model := new(gameModel)
+
+	exitObj := &exit{model: model}
 	char := &character.Character{
 		UnitData: objects.UnitData{
 			MaxHP:    100,
 			CurHP:    100,
 			Team:     0,
-			Position: objects.Location{},
 		},
 	}
-	levelMap, err := gamemap.Load(loader, mapName, map[byte]objects.GameObject{
-		'#': objects.Wall,
-		'O': exitObj,
-		'@': char,
-		'*': objects.Wall, // TODO
+	levelMap, err := gamemap.Load(loader, mapName, map[byte]factory.ObjectFactory{
+		'#': factory.Repeated(objects.Wall),
+		'O': factory.Singleton(exitObj),
+		'@': factory.Singleton(char),
+		'*': factory.Repeated(objects.Wall), // TODO
 	})
-
-	for row := 0; row < levelMap.GetHeight(); row++ {
-		for col := 0; col < levelMap.GetWidth(); col++ {
-			cell := levelMap.Get(objects.Loc(row, col))
-			if unit, ok := cell.Object.(objects.Unit); ok {
-				unit.SetPosition(objects.Loc(row, col))
-			}
-		}
-	}
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &gameModel{
-		levelMap: levelMap,
-		char: char,
-		units: nil,
-		eventHandler: eventHandler,
-		logger: log.New(os.Stderr, "", 0),
-	}, nil
+	model.levelMap = levelMap
+	model.char = char
+	model.units = nil  // TODO
+	model.eventHandler = eventHandler
+	model.logger = log.New(os.Stderr, "", 0)
+
+	return model, nil
 }
 
 func (m *gameModel) SetLogger(logger *log.Logger) {

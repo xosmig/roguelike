@@ -64,3 +64,48 @@ func (m *MockGameObject) ModelName() string {
 func (mr *MockGameObjectMockRecorder) ModelName() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ModelName", reflect.TypeOf((*MockGameObject)(nil).ModelName))
 }
+
+// MockHasPosition is a mock of HasPosition interface
+type MockHasPosition struct {
+	ctrl     *gomock.Controller
+	recorder *MockHasPositionMockRecorder
+}
+
+// MockHasPositionMockRecorder is the mock recorder for MockHasPosition
+type MockHasPositionMockRecorder struct {
+	mock *MockHasPosition
+}
+
+// NewMockHasPosition creates a new mock instance
+func NewMockHasPosition(ctrl *gomock.Controller) *MockHasPosition {
+	mock := &MockHasPosition{ctrl: ctrl}
+	mock.recorder = &MockHasPositionMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockHasPosition) EXPECT() *MockHasPositionMockRecorder {
+	return m.recorder
+}
+
+// SetPosition mocks base method
+func (m *MockHasPosition) SetPosition(pos objects.Location) {
+	m.ctrl.Call(m, "SetPosition", pos)
+}
+
+// SetPosition indicates an expected call of SetPosition
+func (mr *MockHasPositionMockRecorder) SetPosition(pos interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetPosition", reflect.TypeOf((*MockHasPosition)(nil).SetPosition), pos)
+}
+
+// GetPosition mocks base method
+func (m *MockHasPosition) GetPosition() objects.Location {
+	ret := m.ctrl.Call(m, "GetPosition")
+	ret0, _ := ret[0].(objects.Location)
+	return ret0
+}
+
+// GetPosition indicates an expected call of GetPosition
+func (mr *MockHasPositionMockRecorder) GetPosition() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPosition", reflect.TypeOf((*MockHasPosition)(nil).GetPosition))
+}

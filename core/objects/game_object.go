@@ -6,6 +6,24 @@ type GameObject interface {
 	ModelName() string
 }
 
+type HasPosition interface {
+	SetPosition(pos Location)
+	GetPosition() Location
+}
+
+type PositionData struct {
+	Position Location
+}
+
+func (p *PositionData) SetPosition(pos Location) {
+	p.Position = pos
+}
+
+func (p *PositionData) GetPosition() Location {
+	return p.Position
+}
+
+
 type wallObject struct{}
 
 func (w wallObject) Interact(other GameObject) {}
@@ -25,25 +43,3 @@ func (e emptyObject) ModelName() string {
 }
 
 var Empty GameObject = emptyObject{}
-
-type ExitHandler interface {
-	OnExit()
-}
-
-type Exit struct {
-	handler ExitHandler
-}
-
-func NewExit(handler ExitHandler) Exit {
-	return Exit{handler}
-}
-
-func (e Exit) Interact(other GameObject) {}
-
-func (e Exit) Response(other GameObject) {
-	e.handler.OnExit()
-}
-
-func (e Exit) ModelName() string {
-	return "exit"
-}

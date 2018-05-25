@@ -2,6 +2,7 @@ package objects
 
 type Unit interface {
 	GameObject
+	HasPosition
 	RecvDamage(dmg int, from Unit)
 	GetTeam() int
 	GetHP() int
@@ -9,15 +10,13 @@ type Unit interface {
 	GetMaxHP() int
 	SetMaxHP(hp int)
 	Die(from Unit)
-	SetPosition(pos Location)
-	GetPosition() Location
 }
 
 type UnitData struct {
+	PositionData
 	MaxHP    int
 	CurHP    int
 	Team     int
-	Position Location
 }
 
 func RecvDamageDefault(unit Unit, dmg int, from Unit) {
@@ -79,14 +78,6 @@ func (unit *UnitData) GetHPNorm() float32 {
 
 func (unit *UnitData) SetHPNorm(hpNorm float32) {
 	unit.SetHP(int(float32(unit.GetMaxHP())*hpNorm + 0.5))
-}
-
-func (unit *UnitData) SetPosition(pos Location) {
-	unit.Position = pos
-}
-
-func (unit *UnitData) GetPosition() Location {
-	return unit.Position
 }
 
 func (unit *UnitData) Blocks(other GameObject) bool {

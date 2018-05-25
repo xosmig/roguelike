@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xosmig/roguelike/core/objects"
 	"unicode"
+	"github.com/xosmig/roguelike/core/objects/factory"
 )
 
 type Cell struct {
@@ -25,14 +26,14 @@ func (m *StaticMap) Get(loc objects.Location) *Cell {
 	return &m.cells[loc.Row][loc.Col]
 }
 
-func Load(loader resources.Loader, name string, mapping map[byte]objects.GameObject) (GameMap, error) {
+func Load(loader resources.Loader, name string, mapping map[byte]factory.ObjectFactory) (GameMap, error) {
 	reader, err := loader.Load(name)
 	if err != nil {
 		return nil, err
 	}
 
 	if _, present := mapping['.']; !present {
-		mapping['.'] = objects.Empty
+		mapping['.'] = factory.Repeated(objects.Empty)
 	}
 
 	var height int
@@ -58,9 +59,13 @@ func Load(loader resources.Loader, name string, mapping map[byte]objects.GameObj
 					return nil, fmt.Errorf("while reading map position (%d, %d): %v", row, col, err)
 				}
 			}
-			obj, present := mapping[byte(value)]
+			f, present := mapping[byte(value)]
 			if !present {
 				return nil, fmt.Errorf("no mapping for '%c'", value)
+			}
+			obj, err := f.Create(objects.Loc(row, col))
+			if err != nil {
+				return nil, fmt.Errorf("while create game object: %v", err)
 			}
 			cells[row][col] = Cell{Object: obj}
 		}

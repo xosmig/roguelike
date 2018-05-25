@@ -7,6 +7,7 @@ import (
 	"github.com/xosmig/roguelike/gameui"
 	"github.com/xosmig/roguelike/resources"
 	"github.com/xosmig/roguelike/core/objects"
+	"log"
 )
 
 type consoleUi struct {
@@ -87,6 +88,8 @@ loop:
 			ui.model.DoMove(objects.Right)
 		case termbox.KeyCtrlC:
 			break loop
+		default:
+			log.Printf("Debug: unknown command: key=%v\n", ev.Key)
 		}
 	}
 
