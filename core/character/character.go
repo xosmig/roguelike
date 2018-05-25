@@ -14,9 +14,9 @@ type Character struct {
 func New() *Character {
 	return &Character{
 		UnitData: unit.UnitData{
-			MaxHP:    3,
-			CurHP:    3,
-			Team:     unit.TeamGood,
+			MaxHP: 3,
+			CurHP: 3,
+			Team:  unit.TeamGood,
 		},
 	}
 }
@@ -27,6 +27,10 @@ func (char *Character) RecvDamage(dmg int, from unit.Unit) {
 
 func (char *Character) Die(from unit.Unit) {
 	// TODO
+}
+
+func (char *Character) AddItem(item Item) {
+	char.Inventory = append(char.Inventory, item)
 }
 
 func (char *Character) Interact(other objects.GameObject) {

@@ -7,12 +7,15 @@ import (
 	"github.com/xosmig/roguelike/resources"
 	"log"
 	"github.com/xosmig/roguelike/core/objects/factory"
-	"github.com/xosmig/roguelike/core/state"
 	"github.com/xosmig/roguelike/core/geom"
 	"github.com/xosmig/roguelike/core/enemies/zombie"
 	"github.com/xosmig/roguelike/core/ai"
 	"github.com/xosmig/roguelike/core/unit"
 	"github.com/xosmig/roguelike/gamemodel/status"
+	"github.com/xosmig/roguelike/core/state"
+	"github.com/xosmig/roguelike/core/items"
+	"math/rand"
+	"time"
 )
 
 type GameModel interface {
@@ -33,8 +36,11 @@ type exit struct {
 }
 
 func (e *exit) Response(other objects.GameObject) {
+	if _, ok := other.(*character.Character); !ok {
+		return
+	}
+
 	e.model.status = status.Victory
-	// self-remove
 	gamemap.Remove(e.model.GetMap(), e.GetPosition())
 }
 
@@ -44,6 +50,7 @@ func (e *exit) ModelName() string {
 
 func New(loader resources.Loader, mapName string) (GameModel, error) {
 	model := new(gameModel)
+	rand.Seed(time.Now().UnixNano())
 
 	exitObj := &exit{model: model}
 	char := character.New()
@@ -52,7 +59,7 @@ func New(loader resources.Loader, mapName string) (GameModel, error) {
 		'O': factory.Singleton(exitObj),
 		'@': factory.Singleton(char),
 		'z': factory.Singleton(zombie.New()),
-		'$': factory.Singleton(objects.Wall), // TODO
+		'$': factory.Singleton(items.NewItemObject(model, items.NewHealthAmulet())),
 	})
 
 	if err != nil {
@@ -93,16 +100,18 @@ func (m *gameModel) DoMove(direction geom.Direction) {
 		return
 	}
 
+	allObjects := gamemap.AllObjects(m.levelMap)
+
 	m.TryMove(m.GetCharacter(), direction)
-	for _, obj := range gamemap.AllObjects(m.levelMap) {
+	for _, obj := range allObjects {
 		if actionable, ok := obj.(ai.Actionable); ok {
 			actionable.DoAction(m)
 		}
 	}
 
-	for _, obj := range gamemap.AllObjects(m.levelMap) {
+	for _, obj := range allObjects {
 		if u, ok := obj.(unit.Unit); ok && !unit.IsAlive(u) {
-			m.levelMap.Get(u.GetPosition()).Object = objects.Empty
+			state.RemoveDead(m, u)
 		}
 	}
 

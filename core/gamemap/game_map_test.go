@@ -10,6 +10,7 @@ import (
 	"github.com/xosmig/roguelike/core/objects/factory"
 	"github.com/xosmig/roguelike/core/objects/factory/mock_factory"
 	"github.com/xosmig/roguelike/core/character"
+	"github.com/xosmig/roguelike/core/geom"
 )
 
 func TestLoad(t *testing.T) {
@@ -34,7 +35,7 @@ func TestLoad(t *testing.T) {
 
 	char := &character.Character{}
 	charFactory := mock_factory.NewMockObjectFactory(ctrl)
-	charFactory.EXPECT().Create(objects.Loc(2, 1)).Times(1).Return(char, nil)
+	charFactory.EXPECT().Create(geom.Loc(2, 1)).Times(1).Return(char, nil)
 
 	mapping := map[byte]factory.ObjectFactory{
 		'#': wallFactory,
@@ -55,7 +56,7 @@ func TestLoad(t *testing.T) {
 	lines := strings.Split(data, "\n")[1:]
 	for row := 0; row < height; row++ {
 		for col := 0; col < width; col++ {
-			loc := objects.Loc(row, col)
+			loc := geom.Loc(row, col)
 			if objMapping[lines[row][col]] != gameMap.Get(loc).Object {
 				t.Errorf("Wrong object at %v", loc)
 			}

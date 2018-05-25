@@ -33,31 +33,32 @@ func (loc Location) Next(direction Direction) Location {
 	}
 }
 
-func (loc Location) Neighbour(other Location) bool {
-	return (util.AbsInt(loc.Row-other.Row) + util.AbsInt(loc.Col-other.Col)) == 1
+func AbsDist(a Location, b Location) int {
+	return util.AbsInt(a.Row-b.Row) + util.AbsInt(a.Col-b.Col)
+}
+
+func Neighbours(a Location, b Location) bool {
+	return AbsDist(a, b) == 1
 }
 
 func (loc Location) StepTo(other Location) (Direction, bool) {
+	if AbsDist(loc, other) > 1 {
+		return 0, false
+	}
+
 	switch other.Row - loc.Row {
-	case 0:
 	case -1:
 		return Up, true
 	case 1:
 		return Down, true
-	default:
-		return Nowhere, false
 	}
 
 	switch other.Col - loc.Col {
-	case 0:
 	case -1:
 		return Left, true
 	case 1:
 		return Right, true
-	default:
-		return Nowhere, false
 	}
 
-	// same location
 	return Nowhere, true
 }

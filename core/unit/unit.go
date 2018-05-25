@@ -64,7 +64,7 @@ func (unit *UnitData) SetHP(hp int) {
 }
 
 func (unit *UnitData) GetMaxHP() int {
-	return unit.CurHP
+	return unit.MaxHP
 }
 
 func (unit *UnitData) SetMaxHP(hp int) {
