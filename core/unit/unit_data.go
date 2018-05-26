@@ -2,7 +2,7 @@ package unit
 
 import "github.com/xosmig/roguelike/core/objects"
 
-// UnitData contains properties, shared by most units. Not a game object.
+// UnitData contains properties, shared by most units. Not a game object by itself.
 type UnitData struct {
 	objects.PositionData
 	MaxHP int
@@ -44,9 +44,4 @@ func (unit *UnitData) GetMaxHP() int {
 func (unit *UnitData) SetMaxHP(hp int) {
 	unit.MaxHP = hp
 	unit.checkHPBounds()
-}
-
-// IsAlive returns true if the unit has more than 0 health points
-func IsAlive(unit Unit) bool {
-	return unit.GetHP() > 0
 }

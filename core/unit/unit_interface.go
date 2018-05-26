@@ -24,8 +24,7 @@ const (
 
 // RecvDamageDefault is the default implementation of `RecvDamage` method.
 func RecvDamageDefault(unit Unit, dmg int, from Unit) {
-	newHP := unit.GetHP() - dmg
-	unit.SetHP(newHP)
+	unit.SetHP(unit.GetHP() - dmg)
 	log.Printf("Debug: %T damaged by %T, hp=%d\n", unit, from, unit.GetHP())
 }
 
@@ -37,4 +36,9 @@ func InteractDefault(unit Unit, other objects.GameObject) {
 			otherUnit.RecvDamage(1, unit)
 		}
 	}
+}
+
+// IsAlive returns true if the unit has more than 0 health points
+func IsAlive(unit Unit) bool {
+	return unit.GetHP() > 0
 }
