@@ -30,7 +30,6 @@ func (p *PositionData) GetPosition() geom.Location {
 	return p.pos
 }
 
-
 type wallObject struct{}
 
 func (w wallObject) Response(other GameObject) {}

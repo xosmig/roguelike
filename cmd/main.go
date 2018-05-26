@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/xosmig/roguelike/gameui/consoleui"
-	"os"
-	"log"
 	"flag"
 	"fmt"
+	"github.com/xosmig/roguelike/gameui/consoleui"
+	"log"
+	"os"
 )
 
 func main() {

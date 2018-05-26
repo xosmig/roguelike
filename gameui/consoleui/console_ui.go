@@ -2,8 +2,8 @@ package consoleui
 
 import (
 	"fmt"
-	"github.com/xosmig/roguelike/gamemodel"
 	"github.com/nsf/termbox-go"
+	"github.com/xosmig/roguelike/gamemodel"
 	"github.com/xosmig/roguelike/gameui"
 	"github.com/xosmig/roguelike/resources"
 )

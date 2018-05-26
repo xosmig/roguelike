@@ -1,16 +1,16 @@
 package gamemap
 
 import (
-	"testing"
 	"bytes"
-	"github.com/xosmig/roguelike/core/objects"
 	"github.com/golang/mock/gomock"
-	"strings"
-	"github.com/xosmig/roguelike/resources/mock_resources"
-	"github.com/xosmig/roguelike/core/objects/factory"
-	"github.com/xosmig/roguelike/core/objects/factory/mock_factory"
 	"github.com/xosmig/roguelike/core/character"
 	"github.com/xosmig/roguelike/core/geom"
+	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/objects/factory"
+	"github.com/xosmig/roguelike/core/objects/factory/mock_factory"
+	"github.com/xosmig/roguelike/resources/mock_resources"
+	"strings"
+	"testing"
 )
 
 func TestLoad(t *testing.T) {

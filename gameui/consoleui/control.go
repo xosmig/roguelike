@@ -1,11 +1,11 @@
 package consoleui
 
 import (
+	"fmt"
 	"github.com/nsf/termbox-go"
 	"github.com/xosmig/roguelike/core/geom"
-	"log"
-	"fmt"
 	"github.com/xosmig/roguelike/gamemodel/status"
+	"log"
 )
 
 func (ui *consoleUi) getKeyForAction(actions map[termbox.Key]func()) (key termbox.Key, finish bool) {

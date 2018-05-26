@@ -7,4 +7,3 @@ const (
 	Victory
 	Defeat
 )
-

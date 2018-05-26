@@ -1,10 +1,10 @@
 package zombie
 
 import (
-	"github.com/xosmig/roguelike/core/objects"
-	"github.com/xosmig/roguelike/core/unit"
-	"github.com/xosmig/roguelike/core/state"
 	"github.com/xosmig/roguelike/core/geom"
+	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/state"
+	"github.com/xosmig/roguelike/core/unit"
 )
 
 type Zombie struct {

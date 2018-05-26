@@ -1,10 +1,10 @@
 package items
 
 import (
-	"github.com/xosmig/roguelike/core/objects"
 	"github.com/xosmig/roguelike/core/character"
-	"github.com/xosmig/roguelike/core/state"
 	"github.com/xosmig/roguelike/core/gamemap"
+	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/state"
 )
 
 type ItemObject struct {
@@ -15,7 +15,7 @@ type ItemObject struct {
 
 func NewItemObject(st state.GameState, item character.Item) *ItemObject {
 	return &ItemObject{
-		st: st,
+		st:   st,
 		item: item,
 	}
 }

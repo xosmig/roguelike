@@ -1,8 +1,8 @@
 package unit
 
 import (
-	"testing"
 	"github.com/xosmig/roguelike/core/objects"
+	"testing"
 )
 
 func TestUnitDataIsNotGameObject(t *testing.T) {

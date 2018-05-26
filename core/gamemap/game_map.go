@@ -1,12 +1,12 @@
 package gamemap
 
 import (
-	"github.com/xosmig/roguelike/resources"
 	"fmt"
-	"github.com/xosmig/roguelike/core/objects"
-	"unicode"
-	"github.com/xosmig/roguelike/core/objects/factory"
 	"github.com/xosmig/roguelike/core/geom"
+	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/objects/factory"
+	"github.com/xosmig/roguelike/resources"
+	"unicode"
 )
 
 type Cell struct {

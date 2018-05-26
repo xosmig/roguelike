@@ -1,9 +1,9 @@
 package resources
 
 import (
-	"io"
-	"fmt"
 	"bytes"
+	"fmt"
+	"io"
 )
 
 type Loader interface {

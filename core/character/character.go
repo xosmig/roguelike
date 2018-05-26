@@ -1,9 +1,9 @@
 package character
 
 import (
+	"fmt"
 	"github.com/xosmig/roguelike/core/objects"
 	"github.com/xosmig/roguelike/core/unit"
-	"fmt"
 )
 
 type Character interface {

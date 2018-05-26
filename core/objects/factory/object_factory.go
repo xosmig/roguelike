@@ -2,8 +2,8 @@ package factory
 
 import (
 	"fmt"
-	"github.com/xosmig/roguelike/core/objects"
 	"github.com/xosmig/roguelike/core/geom"
+	"github.com/xosmig/roguelike/core/objects"
 )
 
 type ObjectFactory interface {
