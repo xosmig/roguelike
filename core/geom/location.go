@@ -47,7 +47,7 @@ func ManhattanDist(a Location, b Location) int {
 // If they are, returns the direction from `loc` to `other` (`Nowhere` if they are equal).
 func (loc Location) StepTo(other Location) (Direction, bool) {
 	if ManhattanDist(loc, other) > 1 {
-		return 0, false
+		return Nowhere, false
 	}
 
 	switch other.Row - loc.Row {

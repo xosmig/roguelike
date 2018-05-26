@@ -23,6 +23,8 @@ func RandomDirection() Direction {
 
 func (d Direction) String() string {
 	switch d {
+	case Nowhere:
+		return "Nowhere"
 	case Up:
 		return "up"
 	case Down:
@@ -32,6 +34,6 @@ func (d Direction) String() string {
 	case Right:
 		return "right"
 	default:
-		panic(fmt.Sprintf("Unknown direction id: %d", d))
+		return fmt.Sprintf("INVALID_DIRECTION(%d)", int(d))
 	}
 }
