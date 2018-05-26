@@ -3,7 +3,6 @@ package gamemap
 import (
 	"bytes"
 	"github.com/golang/mock/gomock"
-	"github.com/xosmig/roguelike/core/character"
 	"github.com/xosmig/roguelike/core/geom"
 	"github.com/xosmig/roguelike/core/objects"
 	"github.com/xosmig/roguelike/core/objects/factory"
@@ -11,6 +10,8 @@ import (
 	"github.com/xosmig/roguelike/resources/mock_resources"
 	"strings"
 	"testing"
+	"github.com/stretchr/testify/assert"
+	"github.com/xosmig/roguelike/core/character/mock_character"
 )
 
 func TestLoad(t *testing.T) {
@@ -33,7 +34,7 @@ func TestLoad(t *testing.T) {
 	wallFactory := mock_factory.NewMockObjectFactory(ctrl)
 	wallFactory.EXPECT().Create(gomock.Any()).Times(42).Return(objects.Wall, nil)
 
-	char := &character.Character{}
+	char := mock_character.NewMockCharacter(ctrl)
 	charFactory := mock_factory.NewMockObjectFactory(ctrl)
 	charFactory.EXPECT().Create(geom.Loc(2, 1)).Times(1).Return(char, nil)
 
@@ -43,9 +44,9 @@ func TestLoad(t *testing.T) {
 	}
 
 	gameMap, err := Load(loader, "maps/example", mapping)
-	if err != nil {
-		t.Fatalf("Error loading example map: %v", err)
-	}
+	assert.NoError(t, err)
+	assert.Equal(t, height, gameMap.GetHeight())
+	assert.Equal(t, width, gameMap.GetWidth())
 
 	objMapping := map[byte]objects.GameObject{
 		'#': objects.Wall,
@@ -62,5 +63,4 @@ func TestLoad(t *testing.T) {
 			}
 		}
 	}
-
 }
