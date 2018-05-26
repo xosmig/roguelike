@@ -6,4 +6,6 @@ before_install:
 install:
 - ./build.sh
 script:
-- ./test.sh
+- ./test.sh -race -coverprofile=coverage.txt -covermode=atomic
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
