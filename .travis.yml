@@ -1,0 +1,9 @@
+language: go
+
+go: "1.10"
+before_install:
+- curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+install:
+- ./build.sh
+script:
+- ./test.sh
