@@ -83,3 +83,21 @@ func TestCharacter_FailedTakeOff(t *testing.T) {
 	assert.Error(t, char.WearOrTakeOff(0))
 	assert.Equal(t, item, char.Wearing())
 }
+
+func TestCharacter_WearAnotherItemAfterTakeOff(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	char := character.New()
+
+	item0 := mock_character.NewMockItem(ctrl)
+	item1 := mock_character.NewMockItem(ctrl)
+	char.AddItem(item0)
+	char.AddItem(item1)
+
+	item0.EXPECT().Wear(char).Return(nil)
+	assert.NoError(t, char.WearOrTakeOff(0))
+	item0.EXPECT().TakeOff(char).Return(nil)
+	assert.NoError(t, char.WearOrTakeOff(0))
+	item1.EXPECT().Wear(char).Return(nil)
+	assert.NoError(t, char.WearOrTakeOff(1))
+	assert.Equal(t, item1, char.Wearing())
+}
