@@ -5,6 +5,7 @@ import (
 	"math/rand"
 )
 
+// Direction a direction on game map
 type Direction int
 
 const (
@@ -15,6 +16,7 @@ const (
 	Right
 )
 
+// RandomDirection returns random direction (out of 4). Doesn't return Nowhere
 func RandomDirection() Direction {
 	return Direction(rand.Intn(4) + int(Nowhere) + 1)
 }

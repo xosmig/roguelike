@@ -5,11 +5,13 @@ import (
 	"github.com/xosmig/roguelike/util"
 )
 
+// Location represents a point on game map
 type Location struct {
 	Row int
 	Col int
 }
 
+// Loc returns new location with specified row and column
 func Loc(row int, col int) Location {
 	return Location{Row: row, Col: col}
 }
@@ -18,7 +20,7 @@ func (loc Location) String() string {
 	return fmt.Sprintf("(%d, %d)", loc.Row, loc.Col)
 }
 
-// Returns `loc` shifted by 1 position to the direction `direction`
+// Next returns `loc` shifted by 1 position to the direction `direction`
 func (loc Location) Next(direction Direction) Location {
 	switch direction {
 	case Nowhere:
@@ -36,12 +38,12 @@ func (loc Location) Next(direction Direction) Location {
 	}
 }
 
-// Manhattan distance between 2 locations
+// ManhattanDist return manhattan distance between 2 locations
 func ManhattanDist(a Location, b Location) int {
 	return util.AbsInt(a.Row-b.Row) + util.AbsInt(a.Col-b.Col)
 }
 
-// Returns boolean indicating whether the 2 locations are neighbours or equal.
+// StepTo returns boolean indicating whether the 2 locations are neighbours or equal.
 // If they are, returns the direction from `loc` to `other` (`Nowhere` if they are equal).
 func (loc Location) StepTo(other Location) (Direction, bool) {
 	if ManhattanDist(loc, other) > 1 {

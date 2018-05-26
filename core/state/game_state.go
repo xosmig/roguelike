@@ -8,14 +8,14 @@ import (
 	"github.com/xosmig/roguelike/core/unit"
 )
 
-// Used by game objects to access game state from callbacks such as `DoAction`
+// GameState used by game objects to access game state from callbacks such as `DoAction`
 type GameState interface {
 	GetMap() gamemap.GameMap
 	GetCharacter() character.Character
 	TryMove(obj objects.MovableObject, direction geom.Direction)
 }
 
-// Remove unit from map if it's not alive
+// RemoveDead removes unit from map if it's not alive
 func RemoveDead(st GameState, u unit.Unit) bool {
 	if !unit.IsAlive(u) {
 		gamemap.Remove(st.GetMap(), u.GetPosition())
