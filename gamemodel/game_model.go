@@ -40,6 +40,7 @@ func (e *exit) Response(other objects.GameObject) {
 		return
 	}
 
+	log.Println("Info: Character reached exit. Victory.")
 	e.model.status = status.Victory
 	gamemap.Remove(e.model.GetMap(), e.GetPosition())
 }
@@ -97,6 +98,7 @@ func (m *gameModel) TryMove(obj objects.MovableObject, direction geom.Direction)
 
 func (m *gameModel) DoMove(direction geom.Direction) {
 	if m.Status() != status.Continue {
+		log.Println("Error: trying to move, when game already finished. Might be some bug in the UI.")
 		return
 	}
 
@@ -105,17 +107,20 @@ func (m *gameModel) DoMove(direction geom.Direction) {
 	m.TryMove(m.GetCharacter(), direction)
 	for _, obj := range allObjects {
 		if actionable, ok := obj.(ai.Actionable); ok {
+			log.Printf("Debug: %T doing action\n", obj)
 			actionable.DoAction(m)
 		}
 	}
 
 	for _, obj := range allObjects {
 		if u, ok := obj.(unit.Unit); ok && !unit.IsAlive(u) {
+			log.Printf("Info: removing dead %T from map\n", u)
 			state.RemoveDead(m, u)
 		}
 	}
 
 	if !unit.IsAlive(m.GetCharacter()) {
+		log.Println("Info: Character died. Defeat.")
 		m.status = status.Defeat
 	}
 }

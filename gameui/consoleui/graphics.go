@@ -3,6 +3,7 @@ package consoleui
 import (
 	"github.com/nsf/termbox-go"
 	"github.com/xosmig/roguelike/core/geom"
+	"log"
 )
 
 func (ui *consoleUi) drawMap() {
@@ -11,7 +12,8 @@ func (ui *consoleUi) drawMap() {
 	for row := 0; row < gameMap.GetHeight(); row++ {
 		for col := 0; col < gameMap.GetWidth(); col++ {
 			var ch rune
-			switch gameMap.Get(geom.Location{row, col}).Object.ModelName() {
+			modelName := gameMap.Get(geom.Loc(row, col)).Object.ModelName()
+			switch modelName {
 			case "exit":
 				ch = 'O'
 			case "character":
@@ -25,6 +27,7 @@ func (ui *consoleUi) drawMap() {
 			case "item":
 				ch = '$'
 			default:
+				log.Printf("Error: unknown object model name: '%v'\n", modelName)
 				ch = '?'
 			}
 			ui.draw(rune(ch), 0, 0)
@@ -72,6 +75,7 @@ func (ui *consoleUi) drawInventory() {
 		case "health_amulet":
 			ch = 'H'
 		default:
+			log.Printf("Error: unknown item icon name: '%v'\n", item.IconName())
 			ch = '?'
 		}
 
