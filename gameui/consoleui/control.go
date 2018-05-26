@@ -21,10 +21,9 @@ func (ui *consoleUi) getKeyForAction(actions map[termbox.Key]func()) (key termbo
 		}
 		if _, present := actions[ev.Key]; present {
 			return ev.Key, false
-		} else {
-			log.Printf("Debug: Invalid command key: %v\n", ev.Key)
-			continue
 		}
+
+		log.Printf("Debug: Invalid command key: %v\n", ev.Key)
 	}
 }
 
