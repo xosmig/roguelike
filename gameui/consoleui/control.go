@@ -12,7 +12,6 @@ func (ui *consoleUi) getKeyForAction(actions map[termbox.Key]func()) (key termbo
 	var ev termbox.Event
 	for {
 		ev = termbox.PollEvent()
-		log.Printf("FOO: %v %v", ev.Type, ev.Key)
 		if ev.Type != termbox.EventKey {
 			continue
 		}
@@ -47,11 +46,26 @@ func (ui *consoleUi) restartOrExit() error {
 }
 
 func (ui *consoleUi) Run() error {
+	var delayed []func()
+	delay := func(f func()) {
+		delayed = append(delayed, f)
+	}
+
+	accessItem := func(idx int) {
+		err := ui.model.GetCharacter().WearOrTakeOff(idx)
+		if err != nil {
+			delay(func() { ui.messagef("inventory error: %v", err) })
+		}
+	}
+
 	actions := map[termbox.Key]func(){
 		termbox.KeyArrowUp:    func() { ui.model.DoMove(geom.Up) },
 		termbox.KeyArrowDown:  func() { ui.model.DoMove(geom.Down) },
 		termbox.KeyArrowLeft:  func() { ui.model.DoMove(geom.Left) },
 		termbox.KeyArrowRight: func() { ui.model.DoMove(geom.Right) },
+		termbox.KeyCtrlA:      func() { accessItem(0) },
+		termbox.KeyCtrlS:      func() { accessItem(1) },
+		termbox.KeyCtrlD:      func() { accessItem(2) },
 	}
 
 gameLoop:
@@ -71,6 +85,11 @@ gameLoop:
 			ui.messagef("You won [^_^]")
 			return ui.restartOrExit()
 		}
+
+		for _, f := range delayed {
+			f()
+		}
+		delayed = nil
 
 		key, finish := ui.getKeyForAction(actions)
 		if finish {

@@ -5,7 +5,7 @@ import (
 	"github.com/xosmig/roguelike/core/character"
 )
 
-const maxHPBonus = 10
+const amuletHPBonus = 3
 
 type HealthAmulet struct{}
 
@@ -14,15 +14,18 @@ func NewHealthAmulet() character.Item {
 }
 
 func (amulet HealthAmulet) Wear(character *character.Character) error {
-	character.SetMaxHPPreserveNorm(character.GetMaxHP() + maxHPBonus)
+	character.SetMaxHP(character.GetMaxHP() + amuletHPBonus)
+	character.SetHP(character.GetHP() + amuletHPBonus)
 	return nil
 }
 
 func (amulet HealthAmulet) TakeOff(character *character.Character) error {
-	if character.GetMaxHP() <= maxHPBonus {
+	if character.GetHP() <= amuletHPBonus {
 		return fmt.Errorf("this amulet keeps you alive")
 	}
-	character.SetMaxHPPreserveNorm(character.GetMaxHP() - maxHPBonus)
+
+	character.SetHP(character.GetHP() - amuletHPBonus)
+	character.SetMaxHP(character.GetMaxHP() - amuletHPBonus)
 	return nil
 }
 

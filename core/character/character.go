@@ -3,6 +3,7 @@ package character
 import (
 	"github.com/xosmig/roguelike/core/objects"
 	"github.com/xosmig/roguelike/core/unit"
+	"fmt"
 )
 
 type Character struct {
@@ -31,6 +32,22 @@ func (char *Character) Die(from unit.Unit) {
 
 func (char *Character) Wearing() Item {
 	return char.wearing
+}
+
+func (char *Character) WearOrTakeOff(idx int) error {
+	if idx >= len(char.Inventory()) {
+		return fmt.Errorf("no such item")
+	}
+	item := char.Inventory()[idx]
+	switch {
+	case char.wearing == nil:
+		char.wearing = item
+		return item.Wear(char)
+	case char.wearing == item:
+		char.wearing = nil
+		return item.TakeOff(char)
+	}
+	return fmt.Errorf("you should take off other items first")
 }
 
 func (char *Character) Inventory() []Item {

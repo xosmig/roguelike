@@ -83,7 +83,7 @@ func (unit *UnitData) GetHPNorm() float32 {
 }
 
 func (unit *UnitData) SetHPNorm(hpNorm float32) {
-	unit.SetHP(int(float32(unit.GetMaxHP())*hpNorm + 0.5))
+	unit.SetHP(int(float32(unit.GetMaxHP()) * hpNorm))
 }
 
 func IsAlive(unit Unit) bool {
