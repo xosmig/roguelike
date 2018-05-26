@@ -49,15 +49,25 @@ func (char *character) WearOrTakeOff(idx int) error {
 		return fmt.Errorf("no such item")
 	}
 	item := char.Inventory()[idx]
+
 	switch {
 	case char.wearing == nil:
+		err := item.Wear(char)
+		if err != nil {
+			return err
+		}
 		char.wearing = item
-		return item.Wear(char)
 	case char.wearing == item:
+		err := item.TakeOff(char)
+		if err != nil {
+			return err
+		}
 		char.wearing = nil
-		return item.TakeOff(char)
+	default:
+		return fmt.Errorf("you should take off other items first")
 	}
-	return fmt.Errorf("you should take off other items first")
+
+	return nil
 }
 
 func (char *character) Inventory() []Item {
