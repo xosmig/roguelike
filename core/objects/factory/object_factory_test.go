@@ -1,11 +1,11 @@
 package factory
 
 import (
-	"testing"
 	"github.com/golang/mock/gomock"
-	"github.com/xosmig/roguelike/core/objects/mock_objects"
-	"github.com/xosmig/roguelike/core/geom"
 	"github.com/stretchr/testify/assert"
+	"github.com/xosmig/roguelike/core/geom"
+	"github.com/xosmig/roguelike/core/objects/mock_objects"
+	"testing"
 )
 
 func TestSingleton(t *testing.T) {

@@ -1,5 +1,6 @@
 package resources
 
+// BuiltinLoader is used to load builtin resources
 var BuiltinLoader Loader = NewInMemoryLoader()
 
 var exampleMap = "6 11\n" +

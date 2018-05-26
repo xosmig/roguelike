@@ -2,12 +2,12 @@
 package tests
 
 import (
-	"testing"
-	"github.com/xosmig/roguelike/core/unit"
 	"github.com/golang/mock/gomock"
-	"github.com/xosmig/roguelike/core/unit/mock_unit"
-	"github.com/xosmig/roguelike/core/objects/mock_objects"
 	"github.com/stretchr/testify/assert"
+	"github.com/xosmig/roguelike/core/objects/mock_objects"
+	"github.com/xosmig/roguelike/core/unit"
+	"github.com/xosmig/roguelike/core/unit/mock_unit"
+	"testing"
 )
 
 func TestInteractDefault(t *testing.T) {

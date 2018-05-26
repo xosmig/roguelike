@@ -1,10 +1,10 @@
 package tests
 
 import (
-	"github.com/xosmig/roguelike/core/unit"
-	"github.com/xosmig/roguelike/core/objects"
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"github.com/xosmig/roguelike/core/objects"
+	"github.com/xosmig/roguelike/core/unit"
+	"testing"
 )
 
 func TestUnitDataIsNotGameObject(t *testing.T) {
