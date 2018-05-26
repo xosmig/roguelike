@@ -18,6 +18,7 @@ import (
 	"time"
 )
 
+// GameModel manipulates game logic. Supposed to be called from the user interface implementation.
 type GameModel interface {
 	state.GameState
 	DoMove(geom.Direction)
@@ -49,6 +50,8 @@ func (e *exit) ModelName() string {
 	return "exit"
 }
 
+// New initializes a new `GameModel` with the given map.
+// Returns error when the map cannot be loaded.
 func New(loader resources.Loader, mapName string) (GameModel, error) {
 	model := new(gameModel)
 	rand.Seed(time.Now().UnixNano())
@@ -62,6 +65,7 @@ func New(loader resources.Loader, mapName string) (GameModel, error) {
 		'z': factory.Singleton(zombie.New()),
 		'$': factory.Singleton(items.NewItemObject(model, items.NewHealthAmulet())),
 	})
+	log.Println("FOOBAR: ", char.GetPosition())
 
 	if err != nil {
 		return nil, err
@@ -74,6 +78,7 @@ func New(loader resources.Loader, mapName string) (GameModel, error) {
 	return model, nil
 }
 
+// See `GameState` documentation
 func (m *gameModel) TryMove(obj objects.MovableObject, direction geom.Direction) {
 	pos := obj.GetPosition()
 	newPos := pos.Next(direction)
@@ -100,6 +105,9 @@ func (m *gameModel) TryMove(obj objects.MovableObject, direction geom.Direction)
 	newCell.Object = obj
 }
 
+// DoMove tries to move the character to the given direction (see `TryMove`).
+// After that all other objects do their actions.
+// At the end of the turn all dead object are removed from map.
 func (m *gameModel) DoMove(direction geom.Direction) {
 	if m.Status() != status.Continue {
 		log.Println("Error: trying to move, when game already finished. Might be some bug in the UI.")

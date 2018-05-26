@@ -12,6 +12,9 @@ import (
 type GameState interface {
 	GetMap() gamemap.GameMap
 	GetCharacter() character.Character
+	// Tries to move the object to the given direction.
+	// If there is another object, `ojb.Interact` and `otherObject.Response` are called
+	// and no movement happens unless the other object destroys itself in it's response implementation.
 	TryMove(obj objects.MovableObject, direction geom.Direction)
 }
 
