@@ -3,6 +3,8 @@ package gamemap
 import (
 	"bytes"
 	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	"github.com/xosmig/roguelike/core/character/mock_character"
 	"github.com/xosmig/roguelike/core/geom"
 	"github.com/xosmig/roguelike/core/objects"
 	"github.com/xosmig/roguelike/core/objects/factory"
@@ -10,8 +12,6 @@ import (
 	"github.com/xosmig/roguelike/resources/mock_resources"
 	"strings"
 	"testing"
-	"github.com/stretchr/testify/assert"
-	"github.com/xosmig/roguelike/core/character/mock_character"
 )
 
 func TestLoad(t *testing.T) {

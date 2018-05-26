@@ -1,15 +1,16 @@
+// Tests have to be placed in a separate package to avoid dependency cycle between `character` and `mock_character`
 package tests
 
 import (
-	"testing"
+	"errors"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
-	"github.com/xosmig/roguelike/core/character/mock_character"
 	"github.com/xosmig/roguelike/core/character"
-	"errors"
+	"github.com/xosmig/roguelike/core/character/mock_character"
+	"testing"
 )
 
-func TestCharacter_Inventory(t *testing.T) {
+func TestInventory(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	char := character.New()
 
@@ -25,7 +26,7 @@ func TestCharacter_Inventory(t *testing.T) {
 	assert.Contains(t, char.Inventory(), item1)
 }
 
-func TestCharacter_CantWear2Items(t *testing.T) {
+func TestCantWear2Items(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	char := character.New()
 
@@ -40,7 +41,7 @@ func TestCharacter_CantWear2Items(t *testing.T) {
 	assert.Error(t, char.WearOrTakeOff(1))
 }
 
-func TestCharacter_SuccessfulWearAndTakeOff(t *testing.T) {
+func TestSuccessfulWearAndTakeOff(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	char := character.New()
 
@@ -56,7 +57,7 @@ func TestCharacter_SuccessfulWearAndTakeOff(t *testing.T) {
 	assert.Equal(t, nil, char.Wearing())
 }
 
-func TestCharacter_FailedWearing(t *testing.T) {
+func TestFailedWearing(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	char := character.New()
 
@@ -68,7 +69,7 @@ func TestCharacter_FailedWearing(t *testing.T) {
 	assert.Equal(t, nil, char.Wearing())
 }
 
-func TestCharacter_FailedTakeOff(t *testing.T) {
+func TestFailedTakeOff(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	char := character.New()
 
@@ -84,7 +85,7 @@ func TestCharacter_FailedTakeOff(t *testing.T) {
 	assert.Equal(t, item, char.Wearing())
 }
 
-func TestCharacter_WearAnotherItemAfterTakeOff(t *testing.T) {
+func TestWearAnotherItemAfterTakeOff(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	char := character.New()
 

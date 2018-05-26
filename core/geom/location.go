@@ -18,8 +18,11 @@ func (loc Location) String() string {
 	return fmt.Sprintf("(%d, %d)", loc.Row, loc.Col)
 }
 
+// Returns `loc` shifted by 1 position to the direction `direction`
 func (loc Location) Next(direction Direction) Location {
 	switch direction {
+	case Nowhere:
+		return loc
 	case Up:
 		return Location{loc.Row - 1, loc.Col}
 	case Down:
@@ -33,16 +36,15 @@ func (loc Location) Next(direction Direction) Location {
 	}
 }
 
-func AbsDist(a Location, b Location) int {
+// Manhattan distance between 2 locations
+func ManhattanDist(a Location, b Location) int {
 	return util.AbsInt(a.Row-b.Row) + util.AbsInt(a.Col-b.Col)
 }
 
-func Neighbours(a Location, b Location) bool {
-	return AbsDist(a, b) == 1
-}
-
+// Returns boolean indicating whether the 2 locations are neighbours or equal.
+// If they are, returns the direction from `loc` to `other` (`Nowhere` if they are equal).
 func (loc Location) StepTo(other Location) (Direction, bool) {
-	if AbsDist(loc, other) > 1 {
+	if ManhattanDist(loc, other) > 1 {
 		return 0, false
 	}
 

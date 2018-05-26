@@ -77,6 +77,10 @@ func New(loader resources.Loader, mapName string) (GameModel, error) {
 func (m *gameModel) TryMove(obj objects.MovableObject, direction geom.Direction) {
 	pos := obj.GetPosition()
 	newPos := pos.Next(direction)
+	if pos == newPos {
+		log.Printf("Debug: %T stays at %v\n", obj, pos)
+		return
+	}
 
 	log.Printf("Debug: move %T %v from %v to %v\n", obj, direction, pos, newPos)
 
