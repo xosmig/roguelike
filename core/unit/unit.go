@@ -72,20 +72,6 @@ func (unit *UnitData) SetMaxHP(hp int) {
 	unit.checkHPBounds()
 }
 
-func (unit *UnitData) SetMaxHPPreserveNorm(hp int) {
-	hpNorm := unit.GetHPNorm()
-	unit.MaxHP = hp
-	unit.SetHPNorm(hpNorm)
-}
-
-func (unit *UnitData) GetHPNorm() float32 {
-	return float32(unit.GetHP()) / float32(unit.GetMaxHP())
-}
-
-func (unit *UnitData) SetHPNorm(hpNorm float32) {
-	unit.SetHP(int(float32(unit.GetMaxHP()) * hpNorm))
-}
-
 func IsAlive(unit Unit) bool {
 	return unit.GetHP() > 0
 }

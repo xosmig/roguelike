@@ -29,10 +29,6 @@ func AllObjects(gameMap GameMap) []objects.GameObject {
 	return res
 }
 
-func IsFree(gameMap GameMap, pos geom.Location) bool {
-	return gameMap.Get(pos).Object == objects.Empty
-}
-
 func Remove(gameMap GameMap, pos geom.Location) {
 	gameMap.Get(pos).Object = objects.Empty
 }

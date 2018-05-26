@@ -21,7 +21,7 @@ func NewItemObject(st state.GameState, item character.Item) *ItemObject {
 }
 
 func (obj *ItemObject) Response(other objects.GameObject) {
-	if char, ok := other.(*character.Character); ok {
+	if char, ok := other.(character.Character); ok {
 		char.AddItem(obj.item)
 		gamemap.Remove(obj.st.GetMap(), obj.GetPosition())
 	}

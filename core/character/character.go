@@ -6,14 +6,28 @@ import (
 	"fmt"
 )
 
-type Character struct {
+type Character interface {
+	unit.Unit
+	Wearing() Item
+	WearOrTakeOff(idx int) error
+	AddItem(item Item)
+	Inventory() []Item
+}
+
+type Item interface {
+	Wear(character Character) error
+	TakeOff(character Character) error
+	IconName() string
+}
+
+type character struct {
 	unit.UnitData
 	wearing   Item
 	inventory []Item
 }
 
-func New() *Character {
-	return &Character{
+func New() Character {
+	return &character{
 		UnitData: unit.UnitData{
 			MaxHP: 3,
 			CurHP: 3,
@@ -22,19 +36,15 @@ func New() *Character {
 	}
 }
 
-func (char *Character) RecvDamage(dmg int, from unit.Unit) {
+func (char *character) RecvDamage(dmg int, from unit.Unit) {
 	unit.RecvDamageDefault(char, dmg, from)
 }
 
-func (char *Character) Die(from unit.Unit) {
-	// TODO
-}
-
-func (char *Character) Wearing() Item {
+func (char *character) Wearing() Item {
 	return char.wearing
 }
 
-func (char *Character) WearOrTakeOff(idx int) error {
+func (char *character) WearOrTakeOff(idx int) error {
 	if idx >= len(char.Inventory()) {
 		return fmt.Errorf("no such item")
 	}
@@ -50,22 +60,22 @@ func (char *Character) WearOrTakeOff(idx int) error {
 	return fmt.Errorf("you should take off other items first")
 }
 
-func (char *Character) Inventory() []Item {
+func (char *character) Inventory() []Item {
 	return char.inventory
 }
 
-func (char *Character) AddItem(item Item) {
+func (char *character) AddItem(item Item) {
 	char.inventory = append(char.inventory, item)
 }
 
-func (char *Character) Interact(other objects.GameObject) {
+func (char *character) Interact(other objects.GameObject) {
 	unit.InteractDefault(char, other)
 }
 
-func (char *Character) Response(other objects.GameObject) {
+func (char *character) Response(other objects.GameObject) {
 	// empty
 }
 
-func (char *Character) ModelName() string {
+func (char *character) ModelName() string {
 	return "character"
 }

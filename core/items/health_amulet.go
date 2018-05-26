@@ -13,13 +13,13 @@ func NewHealthAmulet() character.Item {
 	return HealthAmulet{}
 }
 
-func (amulet HealthAmulet) Wear(character *character.Character) error {
+func (amulet HealthAmulet) Wear(character character.Character) error {
 	character.SetMaxHP(character.GetMaxHP() + amuletHPBonus)
 	character.SetHP(character.GetHP() + amuletHPBonus)
 	return nil
 }
 
-func (amulet HealthAmulet) TakeOff(character *character.Character) error {
+func (amulet HealthAmulet) TakeOff(character character.Character) error {
 	if character.GetHP() <= amuletHPBonus {
 		return fmt.Errorf("this amulet keeps you alive")
 	}

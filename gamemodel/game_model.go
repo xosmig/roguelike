@@ -26,7 +26,7 @@ type GameModel interface {
 
 type gameModel struct {
 	levelMap gamemap.GameMap
-	char     *character.Character
+	char     character.Character
 	status   status.Status
 }
 
@@ -36,7 +36,7 @@ type exit struct {
 }
 
 func (e *exit) Response(other objects.GameObject) {
-	if _, ok := other.(*character.Character); !ok {
+	if _, ok := other.(character.Character); !ok {
 		return
 	}
 
@@ -124,7 +124,7 @@ func (m *gameModel) GetMap() gamemap.GameMap {
 	return m.levelMap
 }
 
-func (m *gameModel) GetCharacter() *character.Character {
+func (m *gameModel) GetCharacter() character.Character {
 	return m.char
 }
 
