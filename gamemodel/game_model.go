@@ -65,7 +65,6 @@ func New(loader resources.Loader, mapName string) (GameModel, error) {
 		'z': factory.Singleton(zombie.New()),
 		'$': factory.Singleton(items.NewItemObject(model, items.NewHealthAmulet())),
 	})
-	log.Println("FOOBAR: ", char.GetPosition())
 
 	if err != nil {
 		return nil, err
