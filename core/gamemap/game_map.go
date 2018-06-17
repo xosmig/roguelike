@@ -9,16 +9,19 @@ import (
 	"unicode"
 )
 
+// Cell represents a single position on a game map.
 type Cell struct {
 	Object objects.GameObject
 }
 
+// GameMap represents a rectangular map.
 type GameMap interface {
 	GetHeight() int
 	GetWidth() int
 	Get(geom.Location) *Cell
 }
 
+// AllObjects returns a list of all objects on the map.
 func AllObjects(gameMap GameMap) []objects.GameObject {
 	res := make([]objects.GameObject, 0, gameMap.GetHeight()*gameMap.GetWidth())
 	for row := 0; row < gameMap.GetHeight(); row++ {
@@ -29,18 +32,34 @@ func AllObjects(gameMap GameMap) []objects.GameObject {
 	return res
 }
 
+// Remove replaces the object at the position pos with objects.Empty.
 func Remove(gameMap GameMap, pos geom.Location) {
 	gameMap.Get(pos).Object = objects.Empty
 }
 
-type StaticMap struct {
+type staticMap struct {
 	cells [][]Cell
 }
 
-func (m *StaticMap) Get(loc geom.Location) *Cell {
+func (m *staticMap) GetHeight() int {
+	return len(m.cells)
+}
+
+func (m *staticMap) GetWidth() int {
+	return len(m.cells[0])
+}
+
+func (m *staticMap) Get(loc geom.Location) *Cell {
 	return &m.cells[loc.Row][loc.Col]
 }
 
+// Load tries to load a static game map, described in the given resource within the given loader.
+//
+// mapping defines how to load the map:
+// The object returned by mapping[ch].Create(geom.Loc(x, y)) will be placed at the position (x, y),
+// where ch is the char at the position (x, y) in the input.
+//
+// If mapping['.'] is not defined, it will be assigned to objects.Empty.
 func Load(loader resources.Loader, name string, mapping map[byte]factory.ObjectFactory) (GameMap, error) {
 	reader, err := loader.Load(name)
 	if err != nil {
@@ -86,13 +105,5 @@ func Load(loader resources.Loader, name string, mapping map[byte]factory.ObjectF
 		}
 	}
 
-	return &StaticMap{cells}, nil
-}
-
-func (m *StaticMap) GetHeight() int {
-	return len(m.cells)
-}
-
-func (m *StaticMap) GetWidth() int {
-	return len(m.cells[0])
+	return &staticMap{cells}, nil
 }

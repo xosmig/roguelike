@@ -17,7 +17,7 @@ type repeatedObjectFactory struct {
 
 // Repeated creates an object factory that can be called multiple times.
 // `Create` never returns an error.
-// Since it repeats the same objects in many places, it doesn't make sense to call `SetPosition`.
+// Since it repeats the same object in many places, it doesn't make sense to call `SetPosition`.
 func Repeated(obj objects.GameObject) ObjectFactory {
 	return repeatedObjectFactory{obj}
 }
@@ -32,7 +32,7 @@ type singletonObjectFactory struct {
 
 // Singleton creates an object factory that can be called only 1 time.
 // Further calls to `Create` will return errors.
-// Calls `obj.SetPosition` if the object implements `HasPosition`
+// Calls `obj.SetPosition` if the object implements `HasPosition` interface.
 func Singleton(obj objects.GameObject) ObjectFactory {
 	return &singletonObjectFactory{obj: obj}
 }
