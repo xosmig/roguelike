@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>3</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>441</x>
+      <y>168</y>
+      <w>156</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Operations Layer (package gamemodel)
+--
+bg=orange
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>414</x>
+      <y>84</y>
+      <w>198</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>User Interface Layer (package gameui)
+--
+bg=orange
+layer=-10</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>279</x>
+      <y>249</y>
+      <w>486</w>
+      <h>321</h>
+    </coordinates>
+    <panel_attributes>Domain Layer (package core)
+--
+bg=orange
+layer=-10
+fontsize=20</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>399</x>
+      <y>594</y>
+      <w>219</w>
+      <h>87</h>
+    </coordinates>
+    <panel_attributes>Infrastructure Layer
+--
+bg=orange
+layer=-10</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>513</x>
+      <y>645</y>
+      <w>75</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+resources.Loader
+--
++ Load(name string) (io.Reader, error)
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>471</x>
+      <y>618</y>
+      <w>42</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>BuiltinLoader
+valign=center
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>546</x>
+      <y>618</y>
+      <w>42</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>InMemoryLoader
+valign=center
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>564</x>
+      <y>630</y>
+      <w>9</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>618</y>
+      <w>42</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>instance of
+lt=&lt;.</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>408</x>
+      <y>618</y>
+      <w>51</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;library&gt;&gt;
+Termbox-Go
+--
++ SetCell(x, y, char, ...)
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>465</x>
+      <y>423</y>
+      <w>63</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Character
+--
++ Wearing() Item
++ WearOrTakeOff(idx int) error
++ AddItem(item Item)
++ Inventory() []Item
+bg=blue
+group=6</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>372</x>
+      <y>426</y>
+      <w>72</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Item
+--
++ Wear(character Character) error
++ TakeOff(character Character) error
++ IconName() string
+bg=blue
+group=6</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>447</x>
+      <y>180</y>
+      <w>57</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+GameModel
+--
++ DoMove(geom.Direction)
++ Status() status.Status
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>564</x>
+      <y>111</y>
+      <w>33</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Ui
+--
++ Run() error
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>567</x>
+      <y>423</y>
+      <w>72</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Unit
+--
++ RecvDamage(dmg int, from Unit)
++ GetTeam() int
++ GetHP() int
++ SetHP(hp int)
++ GetMaxHP() int
++ SetMaxHP(hp int)
+bg=blue
+group=7</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>507</x>
+      <y>522</y>
+      <w>63</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+GameObject
+--
++ Response(other GameObject)
++ ModelName() string
+bg=blue
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>585</x>
+      <y>522</y>
+      <w>45</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+HasPosition
+--
++ SetPosition
++ GetPosition
+bg=blue
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>573</x>
+      <y>492</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+MovableObject
+--
++ Interact(other GameObject)
+bg=blue
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>666</x>
+      <y>498</y>
+      <w>45</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>Location
+--
++ Row: Int
++ Col: Int
+valign=center
+bg=blue
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>507</y>
+      <w>18</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+group=3</panel_attributes>
+    <additional_attributes>10.0;100.0;40.0;100.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>459</y>
+      <w>9</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>666</x>
+      <y>519</y>
+      <w>69</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+Direction
+{Nowhere, Up, Down, Left, Right}
+bg=blue
+group=1
+halign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>663</x>
+      <y>489</y>
+      <w>75</w>
+      <h>51</h>
+    </coordinates>
+    <panel_attributes>geom
+--
+bg=green
+layer=-5
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>453</x>
+      <y>477</y>
+      <w>186</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>objects
+--
+bg=green
+layer=-5
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>459</x>
+      <y>489</y>
+      <w>102</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ObjectFactory
+--
++ Create(geom.Location) (objects.GameObject, error)
+bg=blue
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>603</x>
+      <y>507</y>
+      <w>9</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+group=3</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>534</x>
+      <y>507</y>
+      <w>9</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+group=3</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>441</x>
+      <y>435</y>
+      <w>30</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.&gt;
+group=6</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>366</x>
+      <y>411</y>
+      <w>171</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>character
+--
+bg=green
+layer=-5
+group=6</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>588</x>
+      <y>285</y>
+      <w>30</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Zombie
+valign=center
+bg=blue
+group=4</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>582</x>
+      <y>276</y>
+      <w>45</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>enemies
+--
+bg=green
+layer=-5
+group=4</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>561</x>
+      <y>408</y>
+      <w>87</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>unit
+--
+bg=green
+layer=-5
+group=7</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>555</x>
+      <y>348</y>
+      <w>99</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+GameState
+--
++ GetMap() gamemap.GameMap
++ GetCharacter() character.Character
++ TryMove(objects.MovableObject, geom.Direction)
+bg=blue
+group=5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>372</y>
+      <w>114</w>
+      <h>57</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;80.0;360.0;80.0;360.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>549</x>
+      <y>336</y>
+      <w>111</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>state
+--
+bg=green
+layer=-5
+group=5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>447</x>
+      <y>339</y>
+      <w>78</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>ai
+--
+bg=green
+layer=-5
+group=8</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>453</x>
+      <y>351</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Actionable
+--
++ DoAction(state.GameState)
+bg=blue
+group=8</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>357</y>
+      <w>51</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>291</x>
+      <y>498</y>
+      <w>96</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+GameMap
+--
++ GetHeight() int
++ GetWidth() int
++ Get(geom.Location) *Cell
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>291</x>
+      <y>534</y>
+      <w>63</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>Cell
+--
++ Object objects.GameObject
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>303</x>
+      <y>522</y>
+      <w>9</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>282</x>
+      <y>480</y>
+      <w>141</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>gamemap
+--
++ func Load(loader resources.Loader, name, mapping) (GameMap, error)
+valign=top
+halign=left
+bg=green
+layer=-5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>495</x>
+      <y>267</y>
+      <w>54</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>items
+--
+bg=green
+layer=-5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>516</x>
+      <y>279</y>
+      <w>30</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>ItemObject
+valign=center
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>501</x>
+      <y>297</y>
+      <w>30</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>HealthAmulet
+valign=center
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>435</y>
+      <w>48</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>384</x>
+      <y>510</y>
+      <w>75</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>513</y>
+      <w>33</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>294</y>
+      <w>126</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;190.0;10.0;110.0;400.0;110.0;400.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>543</x>
+      <y>282</y>
+      <w>30</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>80.0;220.0;80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>615</x>
+      <y>285</y>
+      <w>81</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;520.0;250.0;520.0;250.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>399</x>
+      <y>300</y>
+      <w>108</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;420.0;10.0;10.0;340.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>324</x>
+      <y>282</y>
+      <w>222</w>
+      <h>213</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>720.0;690.0;720.0;630.0;10.0;630.0;10.0;10.0;640.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>468</x>
+      <y>606</y>
+      <w>138</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>resources
+--
+bg=green
+layer=-5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>522</x>
+      <y>183</y>
+      <w>57</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+Status
+{Continue, Victory, Defeat}
+bg=blue
+halign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>501</x>
+      <y>189</y>
+      <w>27</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>483</x>
+      <y>201</y>
+      <w>171</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>550.0;470.0;550.0;110.0;10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>423</x>
+      <y>99</y>
+      <w>120</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>consoleui
+--
++ New(mapName string) (gameui.Ui, error)
+valign=top
+halign=left
+bg=green
+layer=-5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>426</x>
+      <y>117</y>
+      <w>33</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;file&gt;&gt;
+control.go
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>465</x>
+      <y>117</y>
+      <w>33</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;file&gt;&gt;
+graphics.go
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>504</x>
+      <y>117</y>
+      <w>33</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;file&gt;&gt;
+text.go
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>117</y>
+      <w>30</w>
+      <h>9</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>462</x>
+      <y>201</y>
+      <w>9</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>474</x>
+      <y>132</y>
+      <w>9</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>363</x>
+      <y>114</y>
+      <w>66</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;440.0;10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>345</x>
+      <y>549</y>
+      <w>174</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>560.0;340.0;10.0;340.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>219</x>
+      <y>105</y>
+      <w>210</w>
+      <h>528</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>630.0;1740.0;10.0;1740.0;10.0;10.0;680.0;10.0</additional_attributes>
+  </element>
+</diagram>
