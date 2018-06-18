@@ -94,6 +94,7 @@ func (ui *consoleUi) clear() {
 	ui.curLine = 0
 }
 
+// render clears the screen and renders the next frame.
 func (ui *consoleUi) render() error {
 	ui.clear()
 

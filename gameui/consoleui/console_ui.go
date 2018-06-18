@@ -8,6 +8,7 @@ import (
 	"github.com/xosmig/roguelike/resources"
 )
 
+// consoleUi provides ascii graphics ui inside the terminal.
 type consoleUi struct {
 	mapName string
 	model   gamemodel.GameModel
@@ -33,6 +34,7 @@ func (ui *consoleUi) emptyLine() {
 	ui.nextLine()
 }
 
+// New creates a new ascii graphics ui right inside the terminal.
 func New(mapName string) (gameui.Ui, error) {
 	ui := &consoleUi{mapName: mapName}
 

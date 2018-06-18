@@ -8,6 +8,9 @@ import (
 	"log"
 )
 
+// getKeyForAction accepts the set of interesting keys and waits for one of these keys to be pressed,
+// or for a cancellation request from the user (Ctrl+C pressed).
+// It returns the pressed key and a boolean flag, indicating whether the exit was requested or not.
 func (ui *consoleUi) getKeyForAction(actions map[termbox.Key]func()) (key termbox.Key, finish bool) {
 	var ev termbox.Event
 	for {
@@ -27,6 +30,8 @@ func (ui *consoleUi) getKeyForAction(actions map[termbox.Key]func()) (key termbo
 	}
 }
 
+// restartOrExit blocks until the user presses Ctrl+C (in this case it just returns nil),
+// or Ctrl+R (in this case it restarts the game via recursive call to Run method).
 func (ui *consoleUi) restartOrExit() error {
 	ui.messagef("Press 'Ctrl+C' to exit, or 'Ctrl+R' to restart")
 
@@ -44,10 +49,14 @@ func (ui *consoleUi) restartOrExit() error {
 	return ui.Run()
 }
 
+// Run does the read-execute-print-loop.
 func (ui *consoleUi) Run() error {
-	var delayed []func()
+	var afterRender []func()
+	// delay delays the given function execution so that it is executed after rendering.
+	// It's useful to adjust the rendered picture.
+	// For example, by printing a message.
 	delay := func(f func()) {
-		delayed = append(delayed, f)
+		afterRender = append(afterRender, f)
 	}
 
 	accessItem := func(idx int) {
@@ -74,6 +83,11 @@ gameLoop:
 			return fmt.Errorf("while rendering: %v", err)
 		}
 
+		for _, f := range afterRender {
+			f()
+		}
+		afterRender = nil
+
 		switch ui.model.Status() {
 		case status.Continue:
 			// continue
@@ -84,11 +98,6 @@ gameLoop:
 			ui.messagef("You won [^_^]")
 			return ui.restartOrExit()
 		}
-
-		for _, f := range delayed {
-			f()
-		}
-		delayed = nil
 
 		key, finish := ui.getKeyForAction(actions)
 		if finish {
