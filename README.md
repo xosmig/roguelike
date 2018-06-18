@@ -21,3 +21,8 @@ Simple roguelike game skeleton, written in Go using Termbox-Go library.
 * You can run `./test.sh` to run unit tests
 
 * You can run `./generate.sh` to regenerate the generated sources (such as mock objects)
+
+## Structure diagram
+`diagrams/structure.png`
+
+![](diagrams/structure.png)
