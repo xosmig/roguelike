@@ -10,11 +10,11 @@ Simple roguelike game skeleton, written in Go using Termbox-Go library.
 
 * install go: https://golang.org
 
-* install dep: https://github.com/golang/dep
+* `go get github.com/xosmig/roguelike`
 
-* run `./build.sh`
+* `cd $GOPATH/src/github.com/xosmig/roguelike/`
 
-* run `./roguelike.out`
+* `./build.sh`
 
 ## Working with sources
 
