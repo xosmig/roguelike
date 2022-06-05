@@ -32,7 +32,7 @@ func TestLoad(t *testing.T) {
 	loader.EXPECT().Load("maps/example").Times(1).Return(bytes.NewBufferString(data), nil)
 
 	wallFactory := mock_factory.NewMockObjectFactory(ctrl)
-	wallFactory.EXPECT().Create(gomock.Any()).Times(42).Return(objects.Wall, nil)
+	wallFactory.EXPECT().Create(gomock.Any()).Times(41).Return(objects.Wall, nil)
 
 	char := mock_character.NewMockCharacter(ctrl)
 	charFactory := mock_factory.NewMockObjectFactory(ctrl)
