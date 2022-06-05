@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/usr/bin/env bash
+set -eu
 
-dep ensure
 go build "$@"

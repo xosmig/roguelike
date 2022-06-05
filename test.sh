@@ -1,3 +1,4 @@
-#!/bin/bash -eux
+#!/usr/bin/bash
+set -eu
 
 go test "$@" ./...
