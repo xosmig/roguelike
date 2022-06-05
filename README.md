@@ -1,5 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/xosmig/roguelike)](https://goreportcard.com/report/github.com/xosmig/roguelike)
-[![Build Status](https://travis-ci.org/xosmig/roguelike.svg?branch=master)](https://travis-ci.org/xosmig/roguelike)
+[![Build and test](https://github.com/xosmig/roguelike/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/xosmig/roguelike/actions/workflows/build-and-test.yml)
 [![codecov](https://codecov.io/gh/xosmig/roguelike/branch/master/graph/badge.svg)](https://codecov.io/gh/xosmig/roguelike)
 
 # Roguelike
