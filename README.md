@@ -10,15 +10,17 @@ Simple roguelike game skeleton, written in Go using Termbox-Go library.
 
 * install go: https://golang.org
 
-* `go get github.com/xosmig/roguelike`
+* checkout the repository: `git clone git@github.com:xosmig/roguelike.git`
 
-* `cd $GOPATH/src/github.com/xosmig/roguelike/`
+* `cd roguelike`
 
-* `./build.sh`
+* `go build`
+
+* `./roguelike`
 
 ## Working with sources
 
-* You can run `./test.sh` to run unit tests
+* You can run unit tests using `go test ./...` or simply `./test.sh`
 
 * You can run `./generate.sh` to regenerate the generated sources (such as mock objects)
 
